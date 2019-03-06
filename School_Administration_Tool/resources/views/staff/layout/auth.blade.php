@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>AdminLTE 2 | Dashboard</title>
+    <title>School Administration Tool | Dashboard</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.7 -->
@@ -16,6 +16,9 @@
     <link rel="stylesheet" href="../../bower_components/Ionicons/css/ionicons.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="../../dist/css/AdminLTE.min.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="../../dist/css/skins/_all-skins.min.css">
@@ -24,12 +27,16 @@
             'csrfToken' => csrf_token(),
         ]); ?>
     </script>
+    <link rel="stylesheet" href="{!! asset('css/jquery.dataTables.min.css') !!}">
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+
     <![endif]-->
+    <script src="{!! asset('js/jquery.dataTables.min.js') !!}"></script>
 
     <!-- Google Font -->
     <link rel="stylesheet"
@@ -45,7 +52,7 @@
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini"><b>A</b>LT</span>
             <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg"><b>Admin</b>LTE</span>
+            <span class="logo-lg"><b>Admin</b>Dashboard</span>
         </a>
 
         <!-- Header Navbar: style can be found in header.less -->
@@ -258,7 +265,7 @@
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <img src="../../dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-                            <span class="hidden-xs">Alexander Pierce</span>
+                            <span class="hidden-xs">{{Auth::guard('staff')->user()->name}}</span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- User image -->
@@ -266,7 +273,7 @@
                                 <img src="../../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                                 <p>
-                                    Alexander Pierce - Web Developer
+                                    {{Auth::guard('staff')->user()->name}} - "Role"
                                     <small>Member since Nov. 2012</small>
                                 </p>
                             </li>
@@ -291,7 +298,7 @@
                                     <a href="#" class="btn btn-default btn-flat">Profile</a>
                                 </div>
                                 <div class="pull-right">
-                                    <form  role="form" method="POST" action="{{route('logoutGuardian')}}">
+                                    <form  role="form" method="POST" action="{{route('logoutStudent')}}">
                                         {{ csrf_field() }}
                                         <button class="btn btn-default btn-flat" type="submit">Sign out</button>
                                     </form>
@@ -318,7 +325,7 @@
                     <img src="../../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
                 </div>
                 <div class="pull-left info">
-                    <p>Alexander Pierce</p>
+                    <p>{{Auth::guard('staff')->user()->name}}</p>
                     <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                 </div>
             </div>
@@ -349,19 +356,6 @@
                         <li class="active"><a href="index2.html"><i class="fa fa-circle-o"></i> Dashboard v2</a></li>
                     </ul>
                 </li>
-
-                <li>
-                    <a href="{{route('class.index')}}">
-                        <i class="fa fa-files-o"></i>
-                        <span>Class</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{route('section.index')}}">
-                        <i class="fa fa-files-o"></i>
-                        <span>Section</span>
-                    </a>
-                </li>
                 <li class="treeview">
                     <a href="#">
                         <i class="fa fa-files-o"></i>
@@ -385,6 +379,7 @@
             </span>
                     </a>
                 </li>
+            <li><a href="{{route('section.index')}}">Section</a></li>
                 <li class="treeview">
                     <a href="#">
                         <i class="fa fa-pie-chart"></i>
@@ -523,7 +518,23 @@
         <!-- /.sidebar -->
     </aside>
 
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                Dashboard
+                <small>Version 2.0</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li class="active">Dashboard</li>
+            </ol>
+        </section>
+        <section class="content">
 @yield('content')
+        </section>
+    </div>
 
 <!-- Scripts -->
     <footer class="main-footer">
@@ -728,7 +739,7 @@
 
 </div>
 <!-- ./wrapper -->
-
+@yield('scripts')
 <!-- jQuery 3 -->
 <script src="../../bower_components/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->

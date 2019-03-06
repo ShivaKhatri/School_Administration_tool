@@ -10,12 +10,13 @@ class Staff extends Authenticatable
 {
     use Notifiable;
 
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = [
+    public $fillable = [
         'name', 'email', 'password',
     ];
 

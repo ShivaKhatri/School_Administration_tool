@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\DataTables\SectionDataTable;
 use App\Model\Section;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 
 class SectionController extends Controller
@@ -14,14 +17,37 @@ class SectionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+//    public function index()
+//    {
+//        return view('backend.section.indexSection');
+//    }
+
     public function index()
+
     {
-        return view('backend.section.indexSection');
+//        dd(Auth::guard('staff')->user()->name);
+        if (Auth::guard('staff')->check()) {
+            return view('backend.section.indexSection');
+        }
+
     }
-    public function anyData()
+
+    public function tableData()
     {
-        return DataTables::of(Section::query())->make(true);
+        $section = DB::table('sections')
+            ->select(['id', 'name', 'description', 'created_at', 'updated_at']);
+
+        return Datatables::of($section)
+            ->addColumn('action', function ($section) {
+                return '<a href="#edit-'.$section->id.'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</a>&nbsp;&nbsp;<a href="#edit-'.$section->id.'" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-remove"></i> Delete</a>';
+            })
+            ->editColumn('id', 'ID: {{$id}}')
+
+            ->make(true)
+            ;
+
     }
+
     /**
      * Show the form for creating a new resource.
      * @return \Illuminate\Http\Response
@@ -86,6 +112,8 @@ class SectionController extends Controller
     {
         //
     }
+
+
 }
 
 

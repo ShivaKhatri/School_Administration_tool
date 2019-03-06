@@ -15,7 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group(['prefix' => 'staff'], function () {
+Route::group(['prefix' => 'staff','middleware' => ['web', 'staff']], function () {
     Route::get('/loginStaff', 'StaffAuth\LoginController@showLoginForm')->name('loginStaff');
     Route::post('/loginStaff', 'StaffAuth\LoginController@login');
     Route::post('/logoutStaff', 'StaffAuth\LoginController@logout')->name('logoutStaff');
@@ -30,7 +30,7 @@ Route::group(['prefix' => 'staff'], function () {
 
     Route::resource('class','Backend\ClassController');
     Route::resource('section','Backend\SectionController');
-    Route::get('anyData', 'Backend\SectionController@anyData')->name('sectionDatable');
+    Route::get('tableData', 'Backend\SectionController@tableData')->name('sectionDatable');
 
 });
 
@@ -63,3 +63,7 @@ Route::group(['prefix' => 'guardian'], function () {
 });
 
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
