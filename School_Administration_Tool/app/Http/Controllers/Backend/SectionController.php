@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\DataTables\SectionDataTable;
 use App\Model\Section;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
-
+use Carbon\Carbon;
 class SectionController extends Controller
 {
+    protected $model;
     /**
      * Display a listing of the resource.
      *
@@ -39,7 +39,8 @@ class SectionController extends Controller
 
         return Datatables::of($section)
             ->addColumn('action', function ($section) {
-                return '<a href="#edit-'.$section->id.'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</a>&nbsp;&nbsp;<a href="#edit-'.$section->id.'" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-remove"></i> Delete</a>';
+                return '<a href="'.route('section.edit',$section->id).'" class="btn btn-sm btn-primary" style="margin:3px"><i
+                                                    class="glyphicon glyphicon-edit"></i> Edit</a></a>&nbsp;&nbsp;<a href="#edit-'.$section->id.'" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i> Delete</a>';
             })
             ->editColumn('id', 'ID: {{$id}}')
 
@@ -54,7 +55,9 @@ class SectionController extends Controller
      */
     public function create()
     {
-        //
+        if (Auth::guard('staff')->check()) {
+            return view('backend.section.createSection');
+        }
     }
 
     /**
@@ -65,7 +68,11 @@ class SectionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $section=new Section();
+        $section->name=$request->name;
+        $section->description=$request->description;
+        $section->save();
+        return redirect('staff/section');
     }
 
     /**
@@ -87,7 +94,8 @@ class SectionController extends Controller
      */
     public function edit($id)
     {
-        //
+        $section=Section::find($id);
+        return view('backend.section.editSection')->with('section',$section);
     }
 
     /**
@@ -99,7 +107,15 @@ class SectionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+//        dd($request->description);
+        $section=Section::find($id);
+        $section->update([
+           'name'=>$request->name,
+//            'updated_at'=>Carbon::now('asia/kathmandu'),
+        'description'=>$request->description
+
+        ]);
+        return redirect('staff/section');
     }
 
     /**
@@ -113,6 +129,14 @@ class SectionController extends Controller
         //
     }
 
+    public function checkId($id)
+    {
+        $query = Section::all();
+        $query->where('id', '=', $id);
+        $this->model = $query->first();
+
+        return $this->model;
+    }
 
 }
 

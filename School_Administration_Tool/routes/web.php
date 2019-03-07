@@ -15,7 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group(['prefix' => 'staff','middleware' => ['web', 'staff']], function () {
+Route::group(['prefix' => 'staff'], function () {
     Route::get('/loginStaff', 'StaffAuth\LoginController@showLoginForm')->name('loginStaff');
     Route::post('/loginStaff', 'StaffAuth\LoginController@login');
     Route::post('/logoutStaff', 'StaffAuth\LoginController@logout')->name('logoutStaff');
@@ -29,6 +29,8 @@ Route::group(['prefix' => 'staff','middleware' => ['web', 'staff']], function ()
     Route::get('/password/reset/{token}', 'StaffAuth\ResetPasswordController@showResetForm');
 
     Route::resource('class','Backend\ClassController');
+    Route::get('classTableData', 'Backend\ClassController@tableData')->name('classDatable');
+
     Route::resource('section','Backend\SectionController');
     Route::get('tableData', 'Backend\SectionController@tableData')->name('sectionDatable');
 

@@ -8,7 +8,7 @@
                     <h3 class="box-title col-md-6 col-sm-6 col-xs-12">Hover Data Table</h3>
                     <span class="col-md-5 col-sm-5 col-xs-5"></span>
                     <div class="col-md-1 col-sm-1 col-xs-1" >
-                        <a href="{{route('section.create')}}" class="btn btn-sm btn-primary" style="margin:3px"><i
+                        <a href="{{route('subject.create')}}" class="btn btn-sm btn-primary" style="margin:3px"><i
                                     class="glyphicon glyphicon-plus"></i>&nbsp;&nbsp;&nbsp;Add</a>
                     </div>
                 </div>
@@ -46,7 +46,7 @@
         $('#section').DataTable({
             processing: true,
             serverSide: true,
-            ajax: 'tableData',
+            ajax: 'subjectData',
             columns: [
                 {data: 'id', name: 'id'},
                 {data: 'name', name: 'name'},

@@ -9,25 +9,28 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.7 -->
-    <link rel="stylesheet" href="../../bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{!! asset('bower_components/bootstrap/dist/css/bootstrap.min.css') !!}">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="../../bower_components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{!! asset('bower_components/font-awesome/css/font-awesome.min.css') !!}">
     <!-- Ionicons -->
-    <link rel="stylesheet" href="../../bower_components/Ionicons/css/ionicons.min.css">
+    <link rel="stylesheet" href="{!! asset('bower_components/Ionicons/css/ionicons.min.css') !!}">
+@yield('headScripts')
     <!-- Theme style -->
-    <link rel="stylesheet" href="../../dist/css/AdminLTE.min.css">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
 
 
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
-    <link rel="stylesheet" href="../../dist/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="{!! asset('dist/css/skins/_all-skins.min.css') !!}">
     <script>
-        window.Laravel = <?php echo json_encode([
+        window.Laravel =<?php echo json_encode([
             'csrfToken' => csrf_token(),
         ]); ?>
     </script>
     <link rel="stylesheet" href="{!! asset('css/jquery.dataTables.min.css') !!}">
+
+    <link rel="stylesheet" href="{!! asset('dist/css/AdminLTE.min.css') !!}">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -78,7 +81,7 @@
                                     <li><!-- start message -->
                                         <a href="#">
                                             <div class="pull-left">
-                                                <img src="../../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                                                <img src="{!! asset('dist/img/user2-160x160.jpg') !!}" class="img-circle" alt="User Image">
                                             </div>
                                             <h4>
                                                 Support Team
@@ -91,7 +94,7 @@
                                     <li>
                                         <a href="#">
                                             <div class="pull-left">
-                                                <img src="../../dist/img/user3-128x128.jpg" class="img-circle" alt="User Image">
+                                                <img src="{!! asset('dist/img/user3-128x128.jpg') !!}" class="img-circle" alt="User Image">
                                             </div>
                                             <h4>
                                                 AdminLTE Design Team
@@ -103,7 +106,7 @@
                                     <li>
                                         <a href="#">
                                             <div class="pull-left">
-                                                <img src="../../dist/img/user4-128x128.jpg" class="img-circle" alt="User Image">
+                                                <img src="{!! asset('dist/img/user4-128x128.jpg') !!}" class="img-circle" alt="User Image">
                                             </div>
                                             <h4>
                                                 Developers
@@ -115,7 +118,7 @@
                                     <li>
                                         <a href="#">
                                             <div class="pull-left">
-                                                <img src="../../dist/img/user3-128x128.jpg" class="img-circle" alt="User Image">
+                                                <img src="{!! asset('dist/img/user3-128x128.jpg') !!}" class="img-circle" alt="User Image">
                                             </div>
                                             <h4>
                                                 Sales Department
@@ -127,7 +130,7 @@
                                     <li>
                                         <a href="#">
                                             <div class="pull-left">
-                                                <img src="../../dist/img/user4-128x128.jpg" class="img-circle" alt="User Image">
+                                                <img src="{!! asset('dist/img/user4-128x128.jpg') !!}" class="img-circle" alt="User Image">
                                             </div>
                                             <h4>
                                                 Reviewers
@@ -264,13 +267,13 @@
                     <!-- User Account: style can be found in dropdown.less -->
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <img src="../../dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                            <img src="{!! asset('dist/img/user2-160x160.jpg') !!}" class="user-image" alt="User Image">
                             <span class="hidden-xs">{{Auth::guard('staff')->user()->name}}</span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- User image -->
                             <li class="user-header">
-                                <img src="../../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                                <img src="{!! asset('dist/img/user2-160x160.jpg') !!}" class="img-circle" alt="User Image">
 
                                 <p>
                                     {{Auth::guard('staff')->user()->name}} - "Role"
@@ -322,7 +325,7 @@
             <!-- Sidebar user panel -->
             <div class="user-panel">
                 <div class="pull-left image">
-                    <img src="../../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                    <img src="{!! asset('dist/img/user2-160x160.jpg') !!}" class="img-circle" alt="User Image">
                 </div>
                 <div class="pull-left info">
                     <p>{{Auth::guard('staff')->user()->name}}</p>
@@ -352,8 +355,8 @@
             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="index.html"><i class="fa fa-circle-o"></i> Dashboard v1</a></li>
-                        <li class="active"><a href="index2.html"><i class="fa fa-circle-o"></i> Dashboard v2</a></li>
+                        <li><a href="index.html ')!!}"><i class="fa fa-circle-o"></i> Dashboard v1</a></li>
+                        <li class="active"><a href="index2.html ')!!}"><i class="fa fa-circle-o"></i> Dashboard v2</a></li>
                     </ul>
                 </li>
                 <li class="treeview">
@@ -365,14 +368,14 @@
             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="../../pages/layout/top-nav.html"><i class="fa fa-circle-o"></i> Top Navigation</a></li>
-                        <li><a href="../../pages/layout/boxed.html"><i class="fa fa-circle-o"></i> Boxed</a></li>
-                        <li><a href="../../pages/layout/fixed.html"><i class="fa fa-circle-o"></i> Fixed</a></li>
-                        <li><a href="../../pages/layout/collapsed-sidebar.html"><i class="fa fa-circle-o"></i> Collapsed Sidebar</a></li>
+                        <li><a href="{!! asset('pages/layout/top-nav.html') !!}"><i class="fa fa-circle-o"></i> Top Navigation</a></li>
+                        <li><a href="{!! asset('pages/layout/boxed.html') !!}"><i class="fa fa-circle-o"></i> Boxed</a></li>
+                        <li><a href="{!! asset('pages/layout/fixed.html') !!}"><i class="fa fa-circle-o"></i> Fixed</a></li>
+                        <li><a href="{!! asset('pages/layout/collapsed-sidebar.html') !!}"><i class="fa fa-circle-o"></i> Collapsed Sidebar</a></li>
                     </ul>
                 </li>
                 <li>
-                    <a href="../../pages/widgets.html">
+                    <a href="{!! asset('pages/widgets.html') !!}">
                         <i class="fa fa-th"></i> <span>Widgets</span>
                         <span class="pull-right-container">
               <small class="label pull-right bg-green">new</small>
@@ -380,6 +383,7 @@
                     </a>
                 </li>
             <li><a href="{{route('section.index')}}">Section</a></li>
+            <li><a href="{{route('class.index')}}">Section</a></li>
                 <li class="treeview">
                     <a href="#">
                         <i class="fa fa-pie-chart"></i>
@@ -389,10 +393,10 @@
             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="../../pages/charts/chartjs.html"><i class="fa fa-circle-o"></i> ChartJS</a></li>
-                        <li><a href="../../pages/charts/morris.html"><i class="fa fa-circle-o"></i> Morris</a></li>
-                        <li><a href="../../pages/charts/flot.html"><i class="fa fa-circle-o"></i> Flot</a></li>
-                        <li><a href="../../pages/charts/inline.html"><i class="fa fa-circle-o"></i> Inline charts</a></li>
+                        <li><a href="{!! asset('pages/charts/chartjs.html ')!!}"><i class="fa fa-circle-o"></i> ChartJS</a></li>
+                        <li><a href="{!! asset('pages/charts/morris.html ')!!}"><i class="fa fa-circle-o"></i> Morris</a></li>
+                        <li><a href="{!! asset('pages/charts/flot.html ')!!}"><i class="fa fa-circle-o"></i> Flot</a></li>
+                        <li><a href="{!! asset('pages/charts/inline.html ')!!}"><i class="fa fa-circle-o"></i> Inline charts</a></li>
                     </ul>
                 </li>
                 <li class="treeview">
@@ -404,12 +408,12 @@
             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="../../pages/UI/general.html"><i class="fa fa-circle-o"></i> General</a></li>
-                        <li><a href="../../pages/UI/icons.html"><i class="fa fa-circle-o"></i> Icons</a></li>
-                        <li><a href="../../pages/UI/buttons.html"><i class="fa fa-circle-o"></i> Buttons</a></li>
-                        <li><a href="../../pages/UI/sliders.html"><i class="fa fa-circle-o"></i> Sliders</a></li>
-                        <li><a href="../../pages/UI/timeline.html"><i class="fa fa-circle-o"></i> Timeline</a></li>
-                        <li><a href="../../pages/UI/modals.html"><i class="fa fa-circle-o"></i> Modals</a></li>
+                        <li><a href="{!! asset('pages/UI/general.html ')!!}"><i class="fa fa-circle-o"></i> General</a></li>
+                        <li><a href="{!! asset('pages/UI/icons.html ')!!}"><i class="fa fa-circle-o"></i> Icons</a></li>
+                        <li><a href="{!! asset('pages/UI/buttons.html ')!!}"><i class="fa fa-circle-o"></i> Buttons</a></li>
+                        <li><a href="{!! asset('pages/UI/sliders.html ')!!}"><i class="fa fa-circle-o"></i> Sliders</a></li>
+                        <li><a href="{!! asset('pages/UI/timeline.html ')!!}"><i class="fa fa-circle-o"></i> Timeline</a></li>
+                        <li><a href="{!! asset('pages/UI/modals.html ')!!}"><i class="fa fa-circle-o"></i> Modals</a></li>
                     </ul>
                 </li>
                 <li class="treeview">
@@ -420,9 +424,9 @@
             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="../../pages/forms/general.html"><i class="fa fa-circle-o"></i> General Elements</a></li>
-                        <li><a href="../../pages/forms/advanced.html"><i class="fa fa-circle-o"></i> Advanced Elements</a></li>
-                        <li><a href="../../pages/forms/editors.html"><i class="fa fa-circle-o"></i> Editors</a></li>
+                        <li><a href="{!! asset('pages/forms/general.html ')!!}"><i class="fa fa-circle-o"></i> General Elements</a></li>
+                        <li><a href="{!! asset('pages/forms/advanced.html ')!!}"><i class="fa fa-circle-o"></i> Advanced Elements</a></li>
+                        <li><a href="{!! asset('pages/forms/editors.html ')!!}"><i class="fa fa-circle-o"></i> Editors</a></li>
                     </ul>
                 </li>
                 <li class="treeview">
@@ -433,12 +437,12 @@
             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="../../pages/tables/simple.html"><i class="fa fa-circle-o"></i> Simple tables</a></li>
-                        <li><a href="../../pages/tables/data.html"><i class="fa fa-circle-o"></i> Data tables</a></li>
+                        <li><a href="{!! asset('pages/tables/simple.html ')!!}"><i class="fa fa-circle-o"></i> Simple tables</a></li>
+                        <li><a href="{!! asset('pages/tables/data.html ')!!}"><i class="fa fa-circle-o"></i> Data tables</a></li>
                     </ul>
                 </li>
                 <li>
-                    <a href="../../pages/calendar.html">
+                    <a href="{!! asset('pages/calendar.html ')!!}">
                         <i class="fa fa-calendar"></i> <span>Calendar</span>
                         <span class="pull-right-container">
               <small class="label pull-right bg-red">3</small>
@@ -447,7 +451,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="../../pages/mailbox/mailbox.html">
+                    <a href="{!! asset('pages/mailbox/mailbox.html ')!!}">
                         <i class="fa fa-envelope"></i> <span>Mailbox</span>
                         <span class="pull-right-container">
               <small class="label pull-right bg-yellow">12</small>
@@ -464,15 +468,15 @@
             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="../../pages/examples/invoice.html"><i class="fa fa-circle-o"></i> Invoice</a></li>
-                        <li><a href="../../pages/examples/profile.html"><i class="fa fa-circle-o"></i> Profile</a></li>
-                        <li><a href="../../pages/examples/login.html"><i class="fa fa-circle-o"></i> Login</a></li>
-                        <li><a href="../../pages/examples/register.html"><i class="fa fa-circle-o"></i> Register</a></li>
-                        <li><a href="../../pages/examples/lockscreen.html"><i class="fa fa-circle-o"></i> Lockscreen</a></li>
-                        <li><a href="../../pages/examples/404.html"><i class="fa fa-circle-o"></i> 404 Error</a></li>
-                        <li><a href="../../pages/examples/500.html"><i class="fa fa-circle-o"></i> 500 Error</a></li>
-                        <li><a href="../../pages/examples/blank.html"><i class="fa fa-circle-o"></i> Blank Page</a></li>
-                        <li><a href="../../pages/examples/pace.html"><i class="fa fa-circle-o"></i> Pace Page</a></li>
+                        <li><a href="{!! asset('pages/examples/invoice.html ')!!}"><i class="fa fa-circle-o"></i> Invoice</a></li>
+                        <li><a href="{!! asset('pages/examples/profile.html ')!!}"><i class="fa fa-circle-o"></i> Profile</a></li>
+                        <li><a href="{!! asset('pages/examples/login.html ')!!}"><i class="fa fa-circle-o"></i> Login</a></li>
+                        <li><a href="{!! asset('pages/examples/register.html ')!!}"><i class="fa fa-circle-o"></i> Register</a></li>
+                        <li><a href="{!! asset('pages/examples/lockscreen.html ')!!}"><i class="fa fa-circle-o"></i> Lockscreen</a></li>
+                        <li><a href="{!! asset('pages/examples/404.html ')!!}"><i class="fa fa-circle-o"></i> 404 Error</a></li>
+                        <li><a href="{!! asset('pages/examples/500.html ')!!}"><i class="fa fa-circle-o"></i> 500 Error</a></li>
+                        <li><a href="{!! asset('pages/examples/blank.html ')!!}"><i class="fa fa-circle-o"></i> Blank Page</a></li>
+                        <li><a href="{!! asset('pages/examples/pace.html ')!!}"><i class="fa fa-circle-o"></i> Pace Page</a></li>
                     </ul>
                 </li>
                 <li class="treeview">
@@ -739,22 +743,22 @@
 
 </div>
 <!-- ./wrapper -->
-@yield('scripts')
-<!-- jQuery 3 -->
-<script src="../../bower_components/jquery/dist/jquery.min.js"></script>
-<!-- Bootstrap 3.3.7 -->
-<script src="../../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- FastClick -->
-<script src="../../bower_components/fastclick/lib/fastclick.js"></script>
-<!-- AdminLTE App -->
-<script src="../../dist/js/adminlte.min.js"></script>
-<!-- Sparkline -->
-<script src="../../bower_components/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
-<!-- SlimScroll -->
-<script src="../../bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-<!-- ChartJS -->
-<script src="../../bower_components/chart.js/Chart.js"></script>
-<script src="/js/app.js"></script>
 
+<!-- jQuery 3 -->
+<script src="{!! asset('bower_components/jquery/dist/jquery.min.js')!!}"></script>
+<!-- Bootstrap 3.3.7 -->
+<script src="{!! asset('bower_components/bootstrap/dist/js/bootstrap.min.js')!!}"></script>
+<!-- FastClick -->
+<script src="{!! asset('bower_components/fastclick/lib/fastclick.js')!!}"></script>
+<!-- AdminLTE App -->
+<script src="{!! asset('dist/js/adminlte.min.js')!!}"></script>
+<!-- Sparkline -->
+<script src="{!! asset('bower_components/jquery-sparkline/dist/jquery.sparkline.min.js')!!}"></script>
+<!-- SlimScroll -->
+<script src="{!! asset('bower_components/jquery-slimscroll/jquery.slimscroll.min.js')!!}"></script>
+<!-- ChartJS -->
+<script src="{!! asset('bower_components/chart.js/Chart.js')!!}"></script>
+<script src="/js/app.js"></script>
+@yield('scripts')
 </body>
 </html>

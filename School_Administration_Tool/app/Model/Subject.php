@@ -4,7 +4,7 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Section extends Model
+class Subject extends Model
 {
     protected $fillable = ['name', 'description'];
 
@@ -13,6 +13,6 @@ class Section extends Model
      */
     public function classRoom()
     {
-        return $this->belongsToMany('App\Model\ClassRoom', 'classroom_section', 'sec_id', 'class_id');
+        return $this->belongsToMany('App\Model\ClassRoom', 'classroom_subject', 'sub_id', 'class_id');
     }
 }
