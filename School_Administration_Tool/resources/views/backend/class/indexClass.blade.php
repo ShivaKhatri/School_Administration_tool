@@ -21,6 +21,7 @@
                         <th>ID</th>
                         <th>Name</th>
                         <th>Section</th>
+                        <th>Subject</th>
                         <th>Description</th>
                         <th>Created_At</th>
                         <th>Updated_At</th>
@@ -52,11 +53,31 @@
                 {data: 'id', name: 'id'},
                 {data: 'name', name: 'name'},
                 {data: 'section', name: 'section'},
+                {data: 'subject', name: 'subject'},
                 {data: 'description', name: 'description'},
                 {data: 'created_at', name: 'created_at'},
                 {data: 'updated_at', name: 'updated_at'},
                 {data: 'action', name: 'action', orderable: false, searchable: false}
             ]
+        });
+    </script>
+    <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $(document).on('click', '#delete', function(e) {
+            e.preventDefault(); // does not go through with the link.
+
+            var $this = $(this);
+
+            $.post({
+                type: "DELETE",
+                url: $this.attr('href')
+            }).done(function (data) {
+                window.location.replace('/staff/class');
+            });
         });
     </script>
 @endsection

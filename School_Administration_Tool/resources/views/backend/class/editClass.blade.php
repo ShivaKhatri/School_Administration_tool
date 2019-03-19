@@ -1,5 +1,6 @@
 @extends('staff.layout.auth')
 @section('headScripts')
+    <link rel="stylesheet" href="{!! asset('plugins/iCheck/all.css')!!}">
     <link rel="stylesheet" href="{!! asset('plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css')!!}">
 @endsection
 @section('content')
@@ -41,6 +42,24 @@
 
                     </div>
                 </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" >Subject
+                    </label>
+                    <div class="col-md-6 col-sm-6 col-xs-12 row" style="display: flex; flex-wrap: wrap; align-content: stretch;">
+
+                        @foreach($subject as $data)
+                            <div class="col-md-3 col-sm-3 col-xs-6">
+                                {{Form::checkbox('subject[]', $data->id,null,array('class'=>'flat-red'))}}&ensp;&ensp;
+                                <label>{{$data->name}}</label>
+                            </div>
+
+                        @endforeach
+
+
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12" >Description<span class="required">*</span>
                     </label>
@@ -63,6 +82,8 @@
 @endsection
 
 @section('scripts')
+    <script src="{!! asset('plugins/iCheck/icheck.min.js')!!}"></script>
+
     <!-- Bootstrap WYSIHTML5 -->
     <script src="{!! asset('plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js')!!}"></script>
     <script>
@@ -70,5 +91,12 @@
             //bootstrap WYSIHTML5 - text editor
             $('.textarea').wysihtml5()
         })
+    </script>
+    <script>
+        $(function () {
+            $('input[type="checkbox"].flat-red').iCheck({
+                checkboxClass: 'icheckbox_flat-green',
+            })
+        });
     </script>
 @endsection

@@ -1,13 +1,13 @@
 @extends('staff.layout.auth')
 @section('headScripts')
     <link rel="stylesheet" href="{!! asset('plugins/iCheck/all.css')!!}">
-    <link rel="stylesheet" href="{!! asset('plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css')!!}">s
+    <link rel="stylesheet" href="{!! asset('plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css')!!}">
 @endsection
 @section('content')
     {!! Form::open(['url' => 'staff/class','class'=>'form-horizontal','id'=>'createClass']) !!}
     <div class="box box-primary">
         <div class="box-header with-border">
-            <h3 class="box-title">Quick Example</h3>
+            <h3 class="box-title">Add New Class</h3>
         </div>
         <div class="box-body">
             <div class="form-group">
@@ -34,7 +34,22 @@
 
                 </div>
             </div>
+            <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" >Subject
+                </label>
+                <div class="col-md-6 col-sm-6 col-xs-12 row" style="display: flex; flex-wrap: wrap; align-content: stretch;">
 
+                    @foreach($subject as $data)
+                        <div class="col-md-3 col-sm-3 col-xs-6">
+                            {{Form::checkbox('subject[]', $data->id,null,array('class'=>'flat-red'))}}&ensp;&ensp;
+                            <label>{{$data->name}}</label>
+                        </div>
+
+                    @endforeach
+
+
+                </div>
+            </div>
 
             <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" >Description

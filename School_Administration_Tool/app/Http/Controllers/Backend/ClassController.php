@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Model\ClassRoom;
 use App\Model\Section;
+use App\Model\Subject;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -28,7 +29,6 @@ class ClassController extends Controller
     public function tableData()
     {
         $class = ClassRoom::all();
-
         return DataTables::of($class)
             ->addColumn('section', function ($class) {
                 $sec=ClassRoom::find($class->id)->section()->get();
@@ -47,13 +47,30 @@ class ClassController extends Controller
 //                dd($wow);
                 return $wow;
             })
+            ->addColumn('subject', function ($class) {
+                $subject=ClassRoom::find($class->id)->subject()->get();
+                $count=count($subject);
+                $wow='<ol>';
+                foreach($subject as $get){
+                    $wow=$wow.'<li>'.$get->name.'</li>';
+
+                }
+                $wow=$wow.'</ol>';
+//                dd($sec);
+                if($count==0){
+                    $wow='<b>No Subject Assigned</b>';
+                    return $wow;
+                }
+//                dd($wow);
+                return $wow;
+            })
             ->addColumn('action', function ($class) {
                 return '<a href="'.route('class.edit',$class->id).'" class="btn btn-sm btn-primary" style="margin:3px"><i
-                                                    class="glyphicon glyphicon-edit"></i> Edit</a></a>&nbsp;&nbsp;<a href="#edit-'.$class->id.'" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i> Delete</a>';
+                                                    class="glyphicon glyphicon-edit"></i> Edit</a></a>&nbsp;&nbsp;<a href="'.route('class.destroy',$class->id).'" class="btn btn-sm btn-danger" id="delete"><i class="glyphicon glyphicon-remove"></i> Delete</a>';
             })
 
             ->editColumn('id', '{{$id}}')
-            ->rawColumns(['section', 'action'])
+            ->rawColumns(['section', 'subject', 'action'])
             ->make(true)
             ;
 
@@ -67,7 +84,8 @@ class ClassController extends Controller
     {
         if (Auth::guard('staff')->check()) {
             $section=Section::all();
-            return view('backend.class.createClass')->with('section',$section);
+            $subject=Subject::all();
+            return view('backend.class.createClass')->with('section',$section)->with('subject',$subject);
         }
     }
 
@@ -89,6 +107,14 @@ class ClassController extends Controller
 //            dd($get);
             $class_section->insert([
                 ['class_id' => $class->id, 'sec_id' => $get]
+            ]);
+        }
+
+        $class_subject=DB::table('classroom_subject');
+        foreach($request->subject as $get) {
+//            dd($get);
+            $class_subject->insert([
+                ['class_id' => $class->id, 'sub_id' => $get]
             ]);
         }
         return redirect('staff/class');
@@ -114,8 +140,10 @@ class ClassController extends Controller
     public function edit($id)
     {
         $class=ClassRoom::find($id);
+//        dd($class);
         $section=Section::all();
-        return view('backend.class.editClass')->with('class',$class)->with('section',$section);
+        $subject=Subject::all();
+        return view('backend.class.editClass')->with('class',$class)->with('section',$section)->with('subject',$subject);
     }
 
     /**
@@ -141,6 +169,13 @@ class ClassController extends Controller
 //            dd($id);
             $class_section->insert(['class_id' => $id, 'sec_id' => $get]);
         }
+
+        $class_subject=DB::table('classroom_subject');
+        $class_subject->where('class_id','=',$id)->delete();
+        foreach($request->subject as $get) {
+//            dd($id);
+            $class_subject->insert(['class_id' => $id, 'sub_id' => $get]);
+        }
         return redirect('staff/class');
     }
 
@@ -152,6 +187,26 @@ class ClassController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if (!$this->checkId($id)) {
+            return redirect()->route('class.index');
+        }
+
+        $class_section=DB::table('classroom_section');
+        $class_section->where('class_id','=',$id)->delete();
+
+        $class_subject=DB::table('classroom_subject');
+        $class_subject->where('class_id','=',$id)->delete();
+        ClassRoom::destroy($id);
+
+        return 'success';
+    }
+
+    public function checkId($id)
+    {
+        $query = ClassRoom::all();
+        $query->where('id', '=', $id);
+        $this->model = $query->first();
+
+        return $this->model;
     }
 }

@@ -15,8 +15,16 @@ class ClassRoom extends Model
     {
         return $this->belongsToMany('App\Model\Section', 'classroom_section', 'class_id', 'sec_id');
     }
+
     public function subject()
     {
         return $this->belongsToMany('App\Model\Subject', 'classroom_subject', 'class_id', 'sub_id');
     }
+
+    public function exam()
+    {
+        return $this->belongsToMany('App\Model\Exam', 'class_exam_sub', 'class_id', 'exam_id');
+    }
+
+
 }

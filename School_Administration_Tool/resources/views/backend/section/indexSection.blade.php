@@ -57,4 +57,24 @@
             ]
         });
     </script>
+    <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $(document).on('click', '#delete', function(e) {
+            e.preventDefault(); // does not go through with the link.
+
+            var $this = $(this);
+
+            $.post({
+                type: "DELETE",
+                url: $this.attr('href')
+            }).done(function (data) {
+                window.location.replace('/staff/section');
+            });
+        });
+    </script>
+
     @endsection

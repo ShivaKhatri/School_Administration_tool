@@ -15,4 +15,6 @@ class Section extends Model
     {
         return $this->belongsToMany('App\Model\ClassRoom', 'classroom_section', 'sec_id', 'class_id');
     }
+
+
 }

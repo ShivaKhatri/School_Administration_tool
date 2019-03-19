@@ -33,10 +33,8 @@ class RefrenceClassSection extends Migration
     {
         Schema::table('classroom_section', function (Blueprint $table) {
             $table->dropForeign('classroom_section_class_id_foreign');
-            $table->dropColumn('class_id');
 
             $table->dropForeign('classroom_section_sec_id_foreign');
-            $table->dropColumn('sec_id');
 
         });
     }

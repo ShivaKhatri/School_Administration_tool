@@ -40,7 +40,7 @@ class SectionController extends Controller
         return Datatables::of($section)
             ->addColumn('action', function ($section) {
                 return '<a href="'.route('section.edit',$section->id).'" class="btn btn-sm btn-primary" style="margin:3px"><i
-                                                    class="glyphicon glyphicon-edit"></i> Edit</a></a>&nbsp;&nbsp;<a href="#edit-'.$section->id.'" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i> Delete</a>';
+                                                    class="glyphicon glyphicon-edit"></i> Edit</a></a>&nbsp;&nbsp;<a href="'.route('section.destroy',$section->id).'" class="btn btn-sm btn-danger" id="delete"><i class="glyphicon glyphicon-remove"></i> Delete</a>';
             })
             ->editColumn('id', 'ID: {{$id}}')
 
@@ -126,7 +126,16 @@ class SectionController extends Controller
      */
     public function destroy($id)
     {
-        //
+//        dd('here');
+        if (!$this->checkId($id)) {
+            return redirect()->route('section.index');
+        }
+        $class_section=DB::table('classroom_section');
+        $class_section->where('sec_id','=',$id)->delete();
+
+            Section::destroy($id);
+
+        return 'success';
     }
 
     public function checkId($id)
