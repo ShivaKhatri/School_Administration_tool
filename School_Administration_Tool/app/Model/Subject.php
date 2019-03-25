@@ -20,4 +20,5 @@ class Subject extends Model
     {
         return $this->belongsToMany('App\Model\Exam', 'class_exam_sub', 'sub_id', 'exam_id');
     }
+
 }

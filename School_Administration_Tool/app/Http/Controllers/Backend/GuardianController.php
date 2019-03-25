@@ -6,8 +6,7 @@ use App\Guardian;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Yajra\DataTables\DataTables;
+use App\DataTables\GuardiansDataTable;
 
 class GuardianController extends Controller
 {
@@ -16,30 +15,13 @@ class GuardianController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(GuardiansDataTable $datable)
     {
         if (Auth::guard('staff')->check()) {
-            return view('backend.guardian.indexGuardian');
+            return $datable->render('backend.guardian.indexGuardian');
         }
     }
 
-
-    public function tableData()
-    {
-        $guardian = DB::table('guardians')
-            ->select(['id', 'name', 'email', 'created_at', 'updated_at']);
-
-        return DataTables::of($guardian)
-            ->addColumn('action', function ($guardian) {
-                return '<a href="'.route('guardian.edit',$guardian->id).'" class="btn btn-sm btn-primary" style="margin:3px"><i
-                                                    class="glyphicon glyphicon-edit"></i> Edit</a></a>&nbsp;&nbsp;<a href="#edit-'.$guardian->id.'" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i> Delete</a>';
-            })
-            ->editColumn('id', 'ID: {{$id}}')
-
-            ->make(true)
-            ;
-
-    }
     /**
      * Show the form for creating a new resource.
      *
@@ -85,7 +67,7 @@ class GuardianController extends Controller
      */
     public function edit($id)
     {
-        //
+      dd('editr');
     }
 
     /**

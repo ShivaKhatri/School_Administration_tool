@@ -35,12 +35,12 @@ class RefrenceClassExamSub extends Migration
     public function down()
     {
         Schema::table('class_exam_sub', function (Blueprint $table) {
-            $table->dropForeign('exam_details_class_id_foreign');
+            $table->dropForeign('class_exam_sub_class_id_foreign');
 
-            $table->dropForeign('exam_details_exam_id_foreign');
+            $table->dropForeign('class_exam_sub_exam_id_foreign');
 
 
-            $table->dropForeign('exam_details_sub_id_foreign');
+            $table->dropForeign('class_exam_sub_sub_id_foreign');
 
 
         });

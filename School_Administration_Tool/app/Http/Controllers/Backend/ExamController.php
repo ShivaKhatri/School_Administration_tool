@@ -105,6 +105,7 @@ class ExamController extends Controller
             'name'=>'required|max:25',
             'from'=>'required',
             'to'=>'required|date|after:from',
+            'resultDay'=>'required|date|after:to',
             'session_year'=>'required',
         ));
 
@@ -120,16 +121,19 @@ class ExamController extends Controller
 
         $exam->save();
         $class_exam_sub=DB::table('class_exam_sub');
-        foreach($request->class as $get) {
+        foreach($request->classRoom as $get) {
 //            dd($get);
             $subject='subject'.$get;
 //            dd($request->subject10);
+            $i=1;
             foreach($request->$subject as $data){
-                $fullmarks='full_marks'.$data;
-                $passmarks='pass_marks'.$data;
-                $examDate='examDate'.$data;
-                $timeFrom='time_from'.$data;
-                $timeTo='time_to'.$data;
+                $diff=$get.$data;
+                $fullmarks='full_marks'.$diff;
+                $passmarks='pass_marks'.$diff;
+                $examDate='examDate'.$diff;
+                $timeFrom='time_from'.$diff;
+                $timeTo='time_to'.$diff;
+//                dd($request);
                 $class_exam_sub->insert([
                     ['exam_id' => $exam->id, 'class_id' => $get,'sub_id'=>$data,'full_marks'=>$request->$fullmarks,'pass_marks'=>$request->$passmarks,'time_from'=>$request->$timeFrom,'time_to'=>$request->$timeTo,'examDate'=>$request->$examDate]
                 ]);
@@ -160,8 +164,8 @@ class ExamController extends Controller
     {
         $exam=Exam::find($id);
         $subject=Subject::all();
-        $class=ClassRoom::all();
-        return view('backend.exam.editExam')->with('class',$class)->with('exam',$exam)->with('subject',$subject);
+        $classRoom=ClassRoom::all();
+        return view('backend.exam.editExam')->with('classRoom',$classRoom)->with('exam',$exam)->with('subject',$subject);
 
     }
 
@@ -178,6 +182,7 @@ class ExamController extends Controller
             'name'=>'required|max:25',
             'from'=>'required',
             'to'=>'required|date|after:from',
+            'resultDay'=>'required|date|after:to',
             'session_year'=>'required',
         ));
 
@@ -195,17 +200,18 @@ class ExamController extends Controller
         $class_exam_sub=DB::table('class_exam_sub');
         $class_exam_sub->where('exam_id','=',$id)->delete();
 
-        foreach($request->class as $get) {
+        foreach($request->classRoom as $get) {
 
-//            dd($get);
+            dd($request);
             $subject='subject'.$get;
 //            dd($request->subject10);
             foreach($request->$subject as $data){
-                $fullmarks='full_marks'.$data;
-                $passmarks='pass_marks'.$data;
-                $examDate='examDate'.$data;
-                $timeFrom='time_from'.$data;
-                $timeTo='time_to'.$data;
+                $diff=$get.$data;
+                $fullmarks='full_marks'.$diff;
+                $passmarks='pass_marks'.$diff;
+                $examDate='examDate'.$diff;
+                $timeFrom='time_from'.$diff;
+                $timeTo='time_to'.$diff;
                 $class_exam_sub->insert([
                     ['exam_id' => $exam->id, 'class_id' => $get,'sub_id'=>$data,'full_marks'=>$request->$fullmarks,'pass_marks'=>$request->$passmarks,'time_from'=>$request->$timeFrom,'time_to'=>$request->$timeTo,'examDate'=>$request->$examDate]
                 ]);

@@ -15,22 +15,7 @@
 
             <!-- /.box-header -->
             <div class="box-body">
-                <table id="classTable" class="table table-bordered table-hover">
-                    <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Section</th>
-                        <th>Subject</th>
-                        <th>Description</th>
-                        <th>Created_At</th>
-                        <th>Updated_At</th>
-                        <th>Action</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
+                {!! $dataTable->table() !!}
             </div>
             <!-- /.box-body -->
         </div>
@@ -40,27 +25,12 @@
 @endsection
 
 @section('scripts')
-    <script src="/vendor/datatables/buttons.server-side.js"></script>
-    <script src="{!! asset('bower_components/datatables.net/js/jquery.dataTables.min.js')!!}"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <!-- from dataTables push-->
+    <script src="https://cdn.datatables.net/buttons/1.4.2/js/dataTables.buttons.min.js"></script>
     <script src="{!! asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')!!}"></script>
-
-    <script>
-        $('#classTable').DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: 'classTableData',
-            columns: [
-                {data: 'id', name: 'id'},
-                {data: 'name', name: 'name'},
-                {data: 'section', name: 'section'},
-                {data: 'subject', name: 'subject'},
-                {data: 'description', name: 'description'},
-                {data: 'created_at', name: 'created_at'},
-                {data: 'updated_at', name: 'updated_at'},
-                {data: 'action', name: 'action', orderable: false, searchable: false}
-            ]
-        });
-    </script>
+    <script src="{{asset('vendor/datatables/buttons.server-side.js')}}"></script>
+    {!! $dataTable->scripts() !!}
     <script>
         $.ajaxSetup({
             headers: {

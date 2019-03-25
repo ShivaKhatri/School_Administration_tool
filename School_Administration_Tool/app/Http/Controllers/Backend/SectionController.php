@@ -7,8 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Yajra\DataTables\Facades\DataTables;
-use Carbon\Carbon;
+use Yajra\DataTables\DataTables;
+use App\DataTables\SectionsDataTable;
 class SectionController extends Controller
 {
     protected $model;
@@ -22,12 +22,13 @@ class SectionController extends Controller
 //        return view('backend.section.indexSection');
 //    }
 
-    public function index()
+    public function index(SectionsDataTable $dataTable)
 
     {
 //        dd(Auth::guard('staff')->user()->name);
         if (Auth::guard('staff')->check()) {
-            return view('backend.section.indexSection');
+            return $dataTable->render('backend.section.indexSection');
+
         }
 
     }

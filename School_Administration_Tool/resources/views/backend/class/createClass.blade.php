@@ -4,12 +4,13 @@
     <link rel="stylesheet" href="{!! asset('plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css')!!}">
 @endsection
 @section('content')
-    {!! Form::open(['url' => 'staff/class','class'=>'form-horizontal','id'=>'createClass']) !!}
     <div class="box box-primary">
         <div class="box-header with-border">
             <h3 class="box-title">Add New Class</h3>
         </div>
         <div class="box-body">
+            {!! Form::open(['url' => 'staff/class','class'=>'form-horizontal','id'=>'createClass']) !!}
+
             <div class="form-group">
 
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" >Class Name<span class="required">*</span>

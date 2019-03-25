@@ -11,8 +11,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call('SectionTable');
+        $this->call([
+            SectionTable::class,
+            StaffTable::class,
+        ]);
 
-        $this->command->info('Section table seeded!');
+
     }
 }

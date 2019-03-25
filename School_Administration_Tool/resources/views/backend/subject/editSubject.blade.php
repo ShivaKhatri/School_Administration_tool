@@ -32,9 +32,9 @@
                     </label>
                     <div class="col-md-6 col-sm-6 col-xs-12 row" style="display: flex; flex-wrap: wrap; align-content: stretch;">
 
-                        @foreach($class as $data)
+                        @foreach($classRoom as $data)
                             <div class="col-md-3 col-sm-3 col-xs-6">
-                                {{Form::checkbox('class[]', $data->id,$data->name,array('class'=>'flat-red'))}}&ensp;&ensp;
+                                {{Form::checkbox('classRoom[]', $data->id,null,array('class'=>'flat-red'))}}&ensp;&ensp;
                                 <label>{{$data->name}}</label>
                             </div>
 

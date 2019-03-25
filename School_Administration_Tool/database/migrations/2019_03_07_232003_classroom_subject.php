@@ -14,9 +14,8 @@ class ClassroomSubject extends Migration
     public function up()
     {
         Schema::create('classroom_subject', function (Blueprint $table) {
-            $table->integer('sub_id');
             $table->integer('class_id');
-            $table->timestamps();
+            $table->integer('sub_id');
         });
     }
 

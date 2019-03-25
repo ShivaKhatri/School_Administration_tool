@@ -10,7 +10,11 @@
             <div class="box-header with-border">
                 <h3 class="box-title">Add New Subject</h3>
             </div>
-            {!! Form::open(array('route'=>'subject.store', 'class' =>"form-horizontal form-label-left", 'method' => 'post', 'id'=>'subjectForm', 'enctype' => "multipart/form-data")) !!}
+            {!! Form::open(array('route'=>'subject.store',
+            'class' =>"form-horizontal form-label-left",
+            'method' => 'post',
+            'id'=>'subjectForm',
+             'enctype' => "multipart/form-data")) !!}
             <div class="box-body">
                 <div class="form-group">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12" >Subject Name<span class="required">*</span>
@@ -26,7 +30,7 @@
 
                         @foreach($class as $data)
                             <div class="col-md-3 col-sm-3 col-xs-6">
-                                {{Form::checkbox('class[]', $data->id,null,array('class'=>'flat-red'))}}&ensp;&ensp;
+                                {{Form::checkbox('classRoom[]', $data->id,null,array('class'=>'flat-red'))}}&ensp;&ensp;
                                 <label>{{$data->name}}</label>
                             </div>
 

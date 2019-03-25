@@ -100,7 +100,7 @@
                         {{--</div>--}}
                     {{--</div>--}}
                     <div class="form-group col-md-12 col-sm-12 col-xs-12 row" style="display: flex; flex-wrap: wrap; align-content: stretch;">
-                    @foreach($class as $data)
+                    @foreach($classRoom as $data)
                             <span class="col-md-2 col-sm-2 col-xs-2"></span>
                             <div class="col-md-8 col-sm-8 col-xs-8 row" style="margin:3px; border-style: groove; border-color:#3c8dbc; ">
                                 <span class="col-md-4 col-sm-4 col-xs-4"></span>
@@ -108,7 +108,7 @@
                                 <div class="col-md-4 col-sm-4 col-xs-4">
                                     <label >Class {{$data->name}}
                                     </label>
-                                    {{Form::checkbox('class[]', $data->id,null,array('class'=>'green-checkbox'))}}&ensp;&ensp;
+                                    {{Form::checkbox('classRoom[]', $data->id,null,array('class'=>'green-checkbox'))}}&ensp;&ensp;
 
                                 </div>
                                 <span class="col-md-4 col-sm-4 col-xs-4"></span>
@@ -125,6 +125,10 @@
 
                                 <div class="col-md-12 col-sm-12 col-xs-12 row">
                                     @foreach($subject as $row)
+                                        @php
+                                            $diff=$data->id.$row->id;//to create a unique name for the input fields of the subjects marks, by attaching two variables together
+
+                                        @endphp
                                         <div class="col-md-12 col-sm-12 col-xs-12" style="padding: 10px 10px 10px 10px;">
                                             <div class="col-md-4 col-sm-4 col-xs-4" style="padding: 15px 15px 15px 15px;">
                                                 {{Form::checkbox('subject'.$data->id.'[]', $row->id,null,array('class'=>'green-checkbox'))}}&ensp;&ensp;
@@ -132,23 +136,23 @@
                                             </div>
                                             <div class="col-md-4 col-sm-4 col-xs-4" >
                                                 <label>Full Marks</label>
-                                                {{Form::number('full_marks'.$row->id,null,array('min' => 10,'max'=>100,'class'=> 'form-control col-md-7 col-xs-12'))}}
+                                                {{Form::number('full_marks'.$diff,null,array('min' => 10,'max'=>100,'class'=> 'form-control col-md-7 col-xs-12'))}}
                                             </div>
                                             <div class="col-md-4 col-sm-4 col-xs-4">
                                                 <label>Pass Marks</label>
-                                                {{Form::number('pass_marks'.$row->id,null,array('min' => 10,'max'=>60,'class'=> 'form-control col-md-7 col-xs-12','maxlength' => 2))}}
+                                                {{Form::number('pass_marks'.$diff,null,array('min' => 10,'max'=>60,'class'=> 'form-control col-md-7 col-xs-12','maxlength' => 2))}}
                                             </div>
                                             <div class="col-md-4 col-sm-4 col-xs-4">
                                                 <label>Exam Day</label>
-                                                {{Form::date('examDate'.$row->id,null,array('class'=> 'form-control col-md-7 col-xs-12'))}}
+                                                {{Form::date('examDate'.$diff,null,array('class'=> 'form-control col-md-7 col-xs-12'))}}
                                             </div>
                                             <div class="col-md-4 col-sm-4 col-xs-4">
                                                 <label>Time From</label>
-                                                {{Form::time('time_from'.$row->id,null,array('class'=> 'form-control col-md-7 col-xs-12'))}}
+                                                {{Form::time('time_from'.$diff,null,array('class'=> 'form-control col-md-7 col-xs-12'))}}
                                             </div>
                                             <div class="col-md-4 col-sm-4 col-xs-4">
                                                 <label>Time To</label>
-                                                {{Form::time('time_to'.$row->id,null,array('class'=> 'form-control col-md-7 col-xs-12'))}}
+                                                {{Form::time('time_to'.$diff,null,array('class'=> 'form-control col-md-7 col-xs-12'))}}
                                             </div>
                                         </div>
                                     @endforeach
@@ -237,7 +241,7 @@
 //
 
 
-                if(!$('input[name="class[]"]:checked').length > 0) {// $('input[name="class[]"]:checked').length gets the number of checked boxes. if the length of checked boxes is not less than or equal to zero
+                if(!$('input[name="classRoom[]"]:checked').length > 0) {// $('input[name="class[]"]:checked').length gets the number of checked boxes. if the length of checked boxes is not less than or equal to zero
                     alert("You must Select at least one Class.");//alerts user to select at least one class
                     return false;
                 }

@@ -90,11 +90,10 @@ class SubjectController extends Controller
         $subject->save();
 
         $class_subject=DB::table('classroom_subject');
-        if($request->class) {//if class are selected to a subject then this will execute
-            foreach($request->class as $get) {//loops until the last class
+        if(!($request->classRoom==null)) {//if class are selected to a subject then this will execute
+            foreach($request->classRoom as $get) {//loops until the last class
 //            dd($id);
                 $class_subject->insert(['class_id' => $get, 'sub_id' => $subject->id]);//inserts class id and section id into the normalised many to many relationship table
-                return redirect('staff/subject');//return to the subjects index page
 
             }
         }
@@ -123,9 +122,9 @@ class SubjectController extends Controller
      */
     public function edit($id)
     {
-        $class=ClassRoom::all();
         $subject=Subject::find($id);
-        return view('backend.subject.editSubject')->with('subject',$subject)->with('class',$class);
+        $classRoom=ClassRoom::all();
+        return view('backend.subject.editSubject')->with('subject',$subject)->with('classRoom',$classRoom);
     }
 
     /**
@@ -146,17 +145,17 @@ class SubjectController extends Controller
         ]);
         $class_subject=DB::table('classroom_subject');
         $class_subject->where('sub_id','=',$id)->delete();
-        if($request->class) {
-            foreach($request->class as $get) {
+        if($request->classRoom) {
+            foreach($request->classRoom as $get) {
 //            dd($id);
                 $class_subject->insert(['class_id' => $get, 'sub_id' => $id]);
-                return redirect('staff/subject');
 
             }
         }
         else{
             return redirect('staff/subject');
         }
+        return redirect('staff/subject');
 
     }
 
@@ -175,7 +174,7 @@ class SubjectController extends Controller
         $class_subject->where('sub_id','=',$id)->delete();
         Subject::destroy($id);
 
-        return 'success';
+        return redirect('staff/subject');
     }
 
     public function checkId($id)

@@ -76,7 +76,7 @@
 {{--using flex property in the div  so the contents can be aligned in center of the page.--}}
 <div class="flex-center position-ref full-height" style="justify-content: space-around;">
     {{--used card class to use the card type style to represent login of each user--}}
-    <div class="card" style="width: 18rem;">
+    <div class="card" style="width: 18rem; background-color:#cac8b9;">
         {{--using asset function to point the path to public folder of the project and then giving path from there inside the brackets to access the picture --}}
         <img class="card-img-top" src="{{asset('images/welcomePage/student.svg')}}" alt="Card image cap">
         <div class="card-body" style="display:flex; flex-direction: column;">
@@ -85,7 +85,7 @@
         </div>
     </div>
 
-    <div class="card" style="width: 18rem;">
+    <div class="card" style="width: 18rem; background-color:#cac8b9;" >
         {{--using asset function to point the path to public folder of the project and then giving path from there inside the brackets to access the picture --}}
         <img class="card-img-top" src="{{asset('images/welcomePage/family.svg')}}" alt="Card image cap">
         <div class="card-body" style="display:flex; flex-direction: column;">
@@ -94,7 +94,7 @@
         </div>
     </div>
 
-    <div class="card" style="width: 18rem;">
+    <div class="card" style="width: 18rem; background-color:#cac8b9;">
         {{--using asset function to point the path to public folder of the project and then giving path from there inside the brackets to access the picture --}}
         <img class="card-img-top" src="{{asset('images/welcomePage/teacher.svg')}}" alt="Card image cap">
         <div class="card-body" style="display:flex; flex-direction: column;">

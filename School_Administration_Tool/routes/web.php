@@ -29,21 +29,15 @@ Route::group(['prefix' => 'staff'], function () {
     Route::get('/password/reset/{token}', 'StaffAuth\ResetPasswordController@showResetForm');
 
     Route::resource('class','Backend\ClassController');
-    Route::get('classTableData', 'Backend\ClassController@tableData')->name('classDatable');
 
     Route::resource('section','Backend\SectionController');
-    Route::get('tableData', 'Backend\SectionController@tableData')->name('sectionDatable');
 
-    Route::get('guardianTableData', 'Backend\GuardianController@tableData')->name('guardianTableData');
     Route::resource('guardian','Backend\GuardianController');
 
-    Route::get('studentTableData', 'Backend\StudentController@tableData')->name('studentTableData');
     Route::resource('student','Backend\StudentController');
 
-    Route::get('subjectTableData', 'Backend\SubjectController@tableData')->name('subjectTableData');
     Route::resource('subject','Backend\SubjectController');
 
-    Route::get('examTableData', 'Backend\ExamController@tableData')->name('examTableData');
     Route::resource('exam','Backend\ExamController');
 
 

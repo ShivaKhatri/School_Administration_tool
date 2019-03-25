@@ -10,6 +10,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
+use App\DataTables\ClassRoomsDataTable;
+
 
 class ClassController extends Controller
 {
@@ -19,10 +21,10 @@ class ClassController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(ClassRoomsDataTable $section)
     {
 
-        return view('backend.class.indexClass');
+        return  $section->render('backend.class.indexClass');
 
     }
 
@@ -111,11 +113,13 @@ class ClassController extends Controller
         }
 
         $class_subject=DB::table('classroom_subject');
-        foreach($request->subject as $get) {
+        if(!($request->subject==null)) {
+            foreach ($request->subject as $get) {
 //            dd($get);
-            $class_subject->insert([
-                ['class_id' => $class->id, 'sub_id' => $get]
-            ]);
+                $class_subject->insert([
+                    ['class_id' => $class->id, 'sub_id' => $get]
+                ]);
+            }
         }
         return redirect('staff/class');
     }
@@ -172,9 +176,12 @@ class ClassController extends Controller
 
         $class_subject=DB::table('classroom_subject');
         $class_subject->where('class_id','=',$id)->delete();
-        foreach($request->subject as $get) {
+        if(!($request->subject==null)) {
+
+            foreach ($request->subject as $get) {
 //            dd($id);
-            $class_subject->insert(['class_id' => $id, 'sub_id' => $get]);
+                $class_subject->insert(['class_id' => $id, 'sub_id' => $get]);
+            }
         }
         return redirect('staff/class');
     }
