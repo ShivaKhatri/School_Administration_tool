@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\DataTables\StudentsDataTable;
 use App\Student;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -16,12 +17,12 @@ class StudentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(StudentsDataTable $students)
 
     {
 //        dd(Auth::guard('staff')->user()->name);
         if (Auth::guard('staff')->check()) {
-            return view('backend.student.indexStudent');
+            return $students->render('backend.student.indexStudent');
         }
 
     }

@@ -1,5 +1,7 @@
 @extends('staff.layout.auth')
-
+@section('headScripts')
+    <link rel="stylesheet" href="{!! asset('plugins/iCheck/all.css')!!}">
+@endsection
 @section('content')
     {{--<div class="row">--}}
     <div class="box box-primary">
@@ -48,6 +50,9 @@
                                         <strong>{{ $errors->first('password_confirmation') }}</strong>
                                     </span>
                         @endif
+                        <span class="help-block">
+                                        <strong id="message"></strong>
+                                </span>
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-4 col-xs-12  form-group{{ $errors->has('firstName') ? ' has-error' : '' }}">
@@ -109,7 +114,7 @@
                     <label class="control-label"> Date of Birth
                         <span class="required">*</span></label>
                     <div class="input-group col-md-11 col-sm-11 col-xs-12">
-                        <div class='input-group nepaliDatePicker' id='nepaliDate5'>
+                        <div class='input-group ' >
                             {!! Form::date('dob', null, array('class' => 'form-control', "placeholder" => 'Enter Date of Birth',
                                                              'required' => '', 'id'=>'dob')) !!}
                             <span class="input-group-addon">
@@ -228,6 +233,34 @@
                     </div>
                 </div>
                 <div class="x_title col-md-12 col-sm-12 col-xs-12">
+                    <h2> Choose whose information is to be collected </h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="row col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                        <label class="control-label"> Mother</label>
+                        <div class="input-group col-md-11 col-sm-11 col-xs-12">
+                            {{Form::checkbox('mother', "Mother",null,array('class'=>'green-checkbox'))}}&ensp;&ensp;
+
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                        <label class="control-label"> Father</label>
+                        <div class="input-group col-md-11 col-sm-11 col-xs-12">
+                            {{Form::checkbox('father', "Father",null,array('class'=>'green-checkbox'))}}&ensp;&ensp;
+
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12 form-group">
+                        <label class="control-label"> Guardian</label>
+                        <div class="input-group col-md-11 col-sm-11 col-xs-12">
+                            {{Form::checkbox('guardian', "Guardian",null,array('class'=>'green-checkbox'))}}&ensp;&ensp;
+
+                        </div>
+                    </div>
+                </div>
+                <div name="father" id="father">
+                <div class="x_title col-md-12 col-sm-12 col-xs-12">
                     <h2> Fathers Information </h2>
                     <div class="clearfix"></div>
                 </div>
@@ -273,6 +306,19 @@
                         @endif
                     </div>
                 </div>
+                <div class="col-md-4 col-sm-4 col-xs-12 form-group {{ $errors->has('fa_mobile_no') ? ' has-error' : '' }}">
+                    <label class="control-label"> Mobile
+                        No.
+                    </label>
+                    <div class="input-group col-md-11 col-sm-11 col-xs-12">
+                        {{Form::number('fa_mobile_no', null, array('class' => 'form-control', 'placeholder'=>"Enter Phone Number"))}}
+                        @if ($errors->has('fa_mobile_no'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('fa_mobile_no') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+                </div>
                 <div class="col-md-4 col-sm-4 col-xs-12 form-group {{ $errors->has('fa_phone_no') ? ' has-error' : '' }}">
                     <label class="control-label"> Phone
                         No.
@@ -286,16 +332,31 @@
                         @endif
                     </div>
                 </div>
-                <div class="col-md-4 col-sm-4 col-xs-12 form-group {{ $errors->has('fa_office_no') ? ' has-error' : '' }}">
-                    <label class="control-label"> Office
-                        No.
+                <div class="col-md-4 col-sm-4 col-xs-12 form-group {{ $errors->has('fa_address') ? ' has-error' : '' }} ">
+                    <label class="control-label"> Address
+                        <span class="required">*</span>
                     </label>
                     <div class="input-group col-md-11 col-sm-11 col-xs-12">
-                        {{Form::number('fa_office_no', null, array('class' => 'form-control', 'placeholder'=>"Enter Office Number"))}}
-                        @if ($errors->has('fa_office_no'))
+                        {{Form::text('fa_address', null, array('class' => 'form-control', 'placeholder'=>"Enter Address",
+                        'required' => ''))}}
+                        @if ($errors->has('fa_address'))
                             <span class="help-block">
-                                <strong>{{ $errors->first('fa_office_no') }}</strong>
-                            </span>
+                                    <strong>{{ $errors->first('fa_address') }}</strong>
+                                </span>
+                        @endif
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-12 form-group {{ $errors->has('fa_occupation') ? ' has-error' : '' }}">
+                    <label class="control-label"> Fathers Occupation
+                        <span class="required">*</span></label>
+                    <div class="input-group col-md-11 col-sm-11 col-xs-12">
+
+                        {!! Form::text('fa_occupation', null, array('class' => 'form-control', 'required' => '','maxlength'=>10,
+                    'placeholder'=> 'Enter Mothers Occupation'))!!}
+
+                        @if ($errors->has('fa_occupation'))
+                            <span class="help-block"> <strong>{{ $errors->first('fa_occupation') }}</strong>
+                        </span>
                         @endif
                     </div>
                 </div>
@@ -350,7 +411,12 @@
                                     </span>
                         @endif
                     </div>
+                    <span class="help-block">
+                                        <strong id="fa_message"></strong>
+                                </span>
                 </div>
+                </div>
+        <div name="mother" id="mother">
                 <div class="x_title col-md-12 col-sm-12 col-xs-12">
                     <h2> Mothers Information </h2>
                     <div class="clearfix"></div>
@@ -397,6 +463,19 @@
                         @endif
                     </div>
                 </div>
+                <div class="col-md-4 col-sm-4 col-xs-12 form-group {{ $errors->has('ma_mobile_no') ? ' has-error' : '' }}">
+                    <label class="control-label"> Mobile
+                        No.
+                    </label>
+                    <div class="input-group col-md-11 col-sm-11 col-xs-12">
+                        {{Form::number('ma_mobile_no', null, array('class' => 'form-control', 'placeholder'=>"Enter Mobile Number"))}}
+                        @if ($errors->has('ma_mobile_no'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('ma_mobile_no') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+                </div>
                 <div class="col-md-4 col-sm-4 col-xs-12 form-group {{ $errors->has('ma_phone_no') ? ' has-error' : '' }}">
                     <label class="control-label"> Phone
                         No.
@@ -410,16 +489,31 @@
                         @endif
                     </div>
                 </div>
-                <div class="col-md-4 col-sm-4 col-xs-12 form-group {{ $errors->has('ma_office_no') ? ' has-error' : '' }}">
-                    <label class="control-label"> Office
-                        No.
+                <div class="col-md-4 col-sm-4 col-xs-12 form-group {{ $errors->has('ma_address') ? ' has-error' : '' }} ">
+                    <label class="control-label"> Address
+                        <span class="required">*</span>
                     </label>
                     <div class="input-group col-md-11 col-sm-11 col-xs-12">
-                        {{Form::number('ma_office_no', null, array('class' => 'form-control', 'placeholder'=>"Enter Office Number"))}}
-                        @if ($errors->has('ma_office_no'))
+                        {{Form::text('ma_address', null, array('class' => 'form-control', 'placeholder'=>"Enter Address",
+                        'required' => ''))}}
+                        @if ($errors->has('ma_address'))
                             <span class="help-block">
-                                <strong>{{ $errors->first('ma_office_no') }}</strong>
-                            </span>
+                                    <strong>{{ $errors->first('ma_address') }}</strong>
+                                </span>
+                        @endif
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-12 form-group {{ $errors->has('ma_occupation') ? ' has-error' : '' }}">
+                    <label class="control-label"> Mothers Occupation
+                        <span class="required">*</span></label>
+                    <div class="input-group col-md-11 col-sm-11 col-xs-12">
+
+                        {!! Form::text('ma_occupation', null, array('class' => 'form-control', 'required' => '','maxlength'=>10,
+                    'placeholder'=> 'Enter Mothers Occupation'))!!}
+
+                        @if ($errors->has('ma_occupation'))
+                            <span class="help-block"> <strong>{{ $errors->first('ma_occupation') }}</strong>
+                        </span>
                         @endif
                     </div>
                 </div>
@@ -427,7 +521,7 @@
                     <label class="control-label"> Profile picture
                     </label>
                     <div class="input-group col-md-11 col-sm-11 col-xs-12">
-                        {{Form::file('ma_profilePic', ['class'=>'form-control', 'id' => 'fa_profilePic']) }}
+                        {{Form::file('ma_profilePic', ['class'=>'form-control', 'id' => 'ma_profilePic']) }}
                         @if ($errors->has('ma_profilePic'))
                             <span class="help-block">
                                    <strong>{{ $errors->first('ma_profilePic') }}</strong>
@@ -473,8 +567,14 @@
                                         <strong>{{ $errors->first('ma_password_confirmation') }}</strong>
                                     </span>
                         @endif
+                        <span class="help-block">
+                                        <strong id="ma_message"></strong>
+                                </span>
                     </div>
                 </div>
+        </div>
+                <div name="guardian" id="guardian">
+
                 <div class="x_title col-md-12 col-sm-12 col-xs-12">
                     <h2> Gaurdians Information </h2>
                     <div class="clearfix"></div>
@@ -534,16 +634,30 @@
                         @endif
                     </div>
                 </div>
-                <div class="col-md-4 col-sm-4 col-xs-12 form-group {{ $errors->has('ga_office_no') ? ' has-error' : '' }}">
-                    <label class="control-label"> Office
+                <div class="col-md-4 col-sm-4 col-xs-12 form-group {{ $errors->has('ga_mobile_no') ? ' has-error' : '' }}">
+                    <label class="control-label"> Mobile
                         No.
                     </label>
                     <div class="input-group col-md-11 col-sm-11 col-xs-12">
-                        {{Form::number('ga_office_no', null, array('class' => 'form-control', 'placeholder'=>"Enter Office Number"))}}
-                        @if ($errors->has('ga_office_no'))
+                        {{Form::number('ga_mobile_no', null, array('class' => 'form-control', 'placeholder'=>"Enter Mobile Number"))}}
+                        @if ($errors->has('ga_mobile_no'))
                             <span class="help-block">
-                                <strong>{{ $errors->first('ga_office_no') }}</strong>
+                                <strong>{{ $errors->first('ga_mobile_no') }}</strong>
                             </span>
+                        @endif
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-12 form-group {{ $errors->has('ga_address') ? ' has-error' : '' }} ">
+                    <label class="control-label"> Address
+                        <span class="required">*</span>
+                    </label>
+                    <div class="input-group col-md-11 col-sm-11 col-xs-12">
+                        {{Form::text('ga_address', null, array('class' => 'form-control', 'placeholder'=>"Enter Address",
+                        'required' => ''))}}
+                        @if ($errors->has('ga_address'))
+                            <span class="help-block">
+                                    <strong>{{ $errors->first('ga_address') }}</strong>
+                                </span>
                         @endif
                     </div>
                 </div>
@@ -556,6 +670,34 @@
                             <span class="help-block">
                                    <strong>{{ $errors->first('ga_profilePic') }}</strong>
                                 </span>
+                        @endif
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-12 form-group {{ $errors->has('occupation') ? ' has-error' : '' }}">
+                    <label class="control-label"> Guardians Occupation
+                        <span class="required">*</span></label>
+                    <div class="input-group col-md-11 col-sm-11 col-xs-12">
+
+                        {!! Form::text('occupation', null, array('class' => 'form-control', 'required' => '','maxlength'=>10,
+                    'placeholder'=> 'Enter Guardians Occupation'))!!}
+
+                        @if ($errors->has('occupation'))
+                            <span class="help-block"> <strong>{{ $errors->first('occupation') }}</strong>
+                        </span>
+                        @endif
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-12 form-group {{ $errors->has('relation') ? ' has-error' : '' }}">
+                    <label class="control-label"> Guardians Relation With Student
+                        <span class="required">*</span></label>
+                    <div class="input-group col-md-11 col-sm-11 col-xs-12">
+
+                        {!! Form::text('relation', null, array('class' => 'form-control', 'required' => '','maxlength'=>10,
+                    'placeholder'=> 'Guardians Relation with student'))!!}
+
+                        @if ($errors->has('relation'))
+                            <span class="help-block"> <strong>{{ $errors->first('relation') }}</strong>
+                        </span>
                         @endif
                     </div>
                 </div>
@@ -586,6 +728,7 @@
                         @endif
                     </div>
                 </div>
+
                 <div class="col-md-4 col-sm-4 col-xs-12  form-group{{ $errors->has('ga_password_confirmation') ? ' has-error' : '' }}">
                     <label class="control-label"> Confirm Password
                         <span class="required">*</span>
@@ -597,7 +740,11 @@
                                         <strong>{{ $errors->first('ga_password_confirmation') }}</strong>
                                     </span>
                         @endif
+                        <span class="help-block">
+                                        <strong id="ga_message"></strong>
+                                </span>
                     </div>
+                </div>
                 </div>
             </form>
 
@@ -611,3 +758,56 @@
         </div>
     </div>
 @endsection
+@section('scripts')
+    <script src="{!! asset('plugins/iCheck/icheck.min.js')!!}"></script>
+
+    <script>
+        $('#password, #password_confirmation').on('keyup', function () {
+            if ($('#password').val() === $('#password_confirmation').val()) {
+                $('#message').html('Matching').css('color', 'green');
+            } else
+                $('#message').html('Not Matching').css('color', 'red');
+        });
+    </script>
+    <script>
+        $('#fa_password, #fa_password_confirmation').on('keyup', function () {
+            if ($('#fa_password').val() === $('#fa_password_confirmation').val()) {
+                $('#fa_message').html('Matching').css('color', 'green');
+            } else
+                $('#fa_message').html('Not Matching').css('color', 'red');
+        });
+    </script>
+    <script>
+        $('#ma_password, #ma_password_confirmation').on('keyup', function () {
+            if ($('#ma_password').val() === $('#ma_password_confirmation').val()) {
+                $('#ma_message').html('Matching').css('color', 'green');
+            } else
+                $('#ma_message').html('Not Matching').css('color', 'red');
+        });
+    </script>
+    <script>
+        $('#ga_password, #ga_password_confirmation').on('keyup', function () {
+            if ($('#ga_password').val() === $('#ga_password_confirmation').val()) {
+                $('#ga_message').html('Matching').css('color', 'green');
+            } else
+                $('#ga_message').html('Not Matching').css('color', 'red');
+        });
+    </script>
+    <script>
+        $(function () {
+            $('input[type="checkbox"].green-checkbox').iCheck({
+                checkboxClass: 'icheckbox_flat-green'
+            })
+
+        });
+    </script>
+    $(document).ready(function () {
+    $('#checkbox1').change(function () {
+    if (!this.checked)
+    //  ^
+    $('#autoUpdate').fadeIn('slow');
+    else
+    $('#autoUpdate').fadeOut('slow');
+    });
+    });
+    @endsection

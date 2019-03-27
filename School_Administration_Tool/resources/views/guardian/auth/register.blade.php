@@ -43,7 +43,6 @@
 
                                 <div class="col-md-6">
                                     <input id="password" type="password" class="form-control" name="password">
-
                                     @if ($errors->has('password'))
                                         <span class="help-block">
                                         <strong>{{ $errors->first('password') }}</strong>
@@ -64,6 +63,9 @@
                                     </span>
                                     @endif
                                 </div>
+                                <span class="help-block">
+                                        <strong id="message"></strong>
+                                </span>
                             </div>
 
                             <div class="form-group">
@@ -83,7 +85,7 @@
 @section('scripts')
     <script>
     $('#password, #password-confirm').on('keyup', function () {
-        if ($('#password').val() == $('#password-confirm').val()) {
+        if ($('#password').val() === $('#password-confirm').val()) {
             $('#message').html('Matching').css('color', 'green');
         } else
             $('#message').html('Not Matching').css('color', 'red');

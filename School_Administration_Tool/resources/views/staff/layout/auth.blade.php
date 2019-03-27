@@ -20,6 +20,8 @@
     <link  href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.4.2/css/buttons.dataTables.min.css">
 
+    <link rel="stylesheet" href="{!! asset('dist/css/AdminLTE.min.css') !!}">
+    @yield('headcss')
 
     <script>
         window.Laravel =<?php echo json_encode([
@@ -27,7 +29,6 @@
         ]); ?>
     </script>
 
-    <link rel="stylesheet" href="{!! asset('dist/css/AdminLTE.min.css') !!}">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 {{--    <script src="{!! asset('bower_components/jquery/dist/jquery.min.js')!!}"></script>--}}
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
@@ -552,7 +553,6 @@
 <!-- Bootstrap 3.3.7 -->
 
 <script src="{!! asset('bower_components/bootstrap/dist/js/bootstrap.min.js')!!}"></script>
-@yield('scripts')
 <!-- FastClick -->
 <script src="{!! asset('bower_components/fastclick/lib/fastclick.js')!!}"></script>
 <!-- AdminLTE App -->
@@ -561,9 +561,11 @@
 <script src="{!! asset('bower_components/jquery-sparkline/dist/jquery.sparkline.min.js')!!}"></script>
 <!-- SlimScroll -->
 <script src="{!! asset('bower_components/jquery-slimscroll/jquery.slimscroll.min.js')!!}"></script>
-<!-- ChartJS -->
-
-
 <script src="/js/app.js"></script>
+
+<!-- ChartJS -->
+@yield('scripts')
+
+
 </body>
 </html>

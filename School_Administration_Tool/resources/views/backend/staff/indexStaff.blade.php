@@ -5,10 +5,10 @@
         <div class="col-xs-12">
             <div class="box row" style="overflow:hidden; word-wrap:break-word">
                 <div class="box-header row">
-                    <h3 class="box-title col-md-6 col-sm-6 col-xs-12">Student Details</h3>
+                    <h3 class="box-title col-md-6 col-sm-6 col-xs-12">Staff Details</h3>
                     <span class="col-md-5 col-sm-5 col-xs-5"></span>
                     <div class="col-md-1 col-sm-1 col-xs-1" >
-                        <a href="{{route('student.create')}}" class="btn btn-sm btn-primary" style="margin:3px"><i
+                        <a href="{{route('staff.create')}}" class="btn btn-sm btn-primary" style="margin:3px"><i
                                     class="glyphicon glyphicon-plus"></i>&nbsp;&nbsp;&nbsp;Add</a>
                     </div>
                 </div>
@@ -47,7 +47,7 @@
                 type: "DELETE",
                 url: $this.attr('href')
             }).done(function (data) {
-                window.location.replace('/staff/student');
+                window.location.replace('/staff/staff');
             });
         });
     </script>

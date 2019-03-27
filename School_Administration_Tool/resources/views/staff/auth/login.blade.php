@@ -39,7 +39,7 @@
         <p class="login-box-msg">Sign in to start your session</p>
         <a href="{{route('registerStaff')}}"> registe</a>
 
-        <form  role="form" method="POST" action="{{ url('/staff/loginStaff') }}">
+        <form  role="form" method="POST" action="{{ url('/staff/login') }}">
             {{ csrf_field() }}
             {{--using admin lite templates alert warning for alreting users--}}
             <div class="form-group has-feedback">

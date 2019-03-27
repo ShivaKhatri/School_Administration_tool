@@ -1,5 +1,5 @@
 @extends('staff.layout.auth')
-@section('headScripts')
+@section('headcss')
     <link rel="stylesheet" href="{!! asset('plugins/iCheck/all.css')!!}">
     <link rel="stylesheet" href="{!! asset('plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css')!!}">
 @endsection
@@ -74,10 +74,10 @@
 
             </div>
             <div class="form-group col-md-12 col-sm-12 col-xs-12 row" style="display: flex; flex-wrap: wrap; align-content: stretch;">
-{{--@php--}}
-    {{--$i=1;--}}
-                        {{--$diff=0;--}}
-{{--@endphp--}}
+                {{--@php--}}
+                {{--$i=1;--}}
+                {{--$diff=0;--}}
+                {{--@endphp--}}
                 @foreach($class as $data)
                     <span class="col-md-2 col-sm-2 col-xs-2"></span>
                     <div class="col-md-8 col-sm-8 col-xs-8 row" style="margin:3px; border-style: groove; border-color:#3c8dbc; ">
@@ -115,14 +115,12 @@
                         </div>
                         @php
                             $subject=\App\Model\ClassRoom::find($data->id)->subject()->get();
-
                         @endphp
 
                         <div class="col-md-12 col-sm-12 col-xs-12 row">
                             @foreach($subject as $row)
                                 @php
-                                       $diff=$data->id.$row->id;//to create a unique name for the input fields of the subjects marks, by attaching two variables together
-
+                                    $diff=$data->id.$row->id;//to create a unique name for the input fields of the subjects marks, by attaching two variables together
                                 @endphp
 
                                 <div class="col-md-12 col-sm-12 col-xs-12" style="padding: 10px 10px 10px 10px;">
@@ -217,7 +215,6 @@
                 checkboxClass: 'icheckbox_flat-green',
                 radioClass   : 'iradio_flat-green'
             })
-
         });
     </script>
     <script>
@@ -226,7 +223,6 @@
                 checkboxClass: 'icheckbox_flat-red',
                 radioClass   : 'iradio_flat-red'
             })
-
         });
     </script>
     <script>
@@ -236,9 +232,7 @@
                     alert("You must Select at least one Class.");//alerts user to select at least one class
                     return false;
                 }
-
             });
         });
-
     </script>
 @endsection

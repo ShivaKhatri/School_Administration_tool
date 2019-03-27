@@ -14,14 +14,13 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('staff/login', 'StaffAuth\LoginController@showLoginForm')->name('loginStaff');
+Route::post('staff/login', 'StaffAuth\LoginController@login');
+Route::group(['prefix' => 'staff','middleware' => ['staff']], function () {
+    Route::post('/logout', 'StaffAuth\LoginController@logout')->name('logoutStaff');
 
-Route::group(['prefix' => 'staff'], function () {
-    Route::get('/loginStaff', 'StaffAuth\LoginController@showLoginForm')->name('loginStaff');
-    Route::post('/loginStaff', 'StaffAuth\LoginController@login');
-    Route::post('/logoutStaff', 'StaffAuth\LoginController@logout')->name('logoutStaff');
-
-    Route::get('/registerStaff', 'StaffAuth\RegisterController@showRegistrationForm')->name('registerStaff');
-    Route::post('/registerStaff', 'StaffAuth\RegisterController@register');
+    Route::get('/register', 'StaffAuth\RegisterController@showRegistrationForm')->name('registerStaff');
+    Route::post('/register', 'StaffAuth\RegisterController@register');
 
     Route::post('/password/email', 'StaffAuth\ForgotPasswordController@sendResetLinkEmail')->name('password.request');
     Route::post('/password/reset', 'StaffAuth\ResetPasswordController@reset')->name('password.email');
@@ -35,6 +34,8 @@ Route::group(['prefix' => 'staff'], function () {
     Route::resource('guardian','Backend\GuardianController');
 
     Route::resource('student','Backend\StudentController');
+
+    Route::resource('staff','Backend\StaffController');
 
     Route::resource('subject','Backend\SubjectController');
 
