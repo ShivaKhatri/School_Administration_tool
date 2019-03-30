@@ -38,4 +38,8 @@ class Guardian extends Authenticatable
     {
         $this->notify(new GuardianResetPassword($token));
     }
+    public function student()
+    {
+        return $this->belongsToMany('App\Student', 'guardian_student', 'guard_id', 'student_id');
+    }
 }

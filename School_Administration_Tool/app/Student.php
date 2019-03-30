@@ -38,4 +38,16 @@ class Student extends Authenticatable
     {
         $this->notify(new StudentResetPassword($token));
     }
+    public function classRoom()
+    {
+        return $this->belongsToMany('App\Model\ClassRoom', 'class_section_student', 'student_id', 'class_id');
+    }
+    public function section()
+    {
+        return $this->belongsToMany('App\Model\Section', 'class_section_student', 'student_id', 'section_id');
+    }
+    public function guardian()
+    {
+        return $this->belongsToMany('App\Guardian', 'class_section_student', 'student_id', 'guard_id');
+    }
 }

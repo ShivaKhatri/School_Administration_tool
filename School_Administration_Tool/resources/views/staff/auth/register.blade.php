@@ -7,7 +7,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Register</div>
                     <div class="panel-body">
-                            {!! Form::open(['url' => '/staff/staff','class'=>'form-horizontal','id'=>'staffForm','files'=>'true']) !!}
+                            {!! Form::open(['url' => 'staff/staff','class'=>'form-horizontal','id'=>'staffForm','files'=>'true']) !!}
 
                             {{ csrf_field() }}
 

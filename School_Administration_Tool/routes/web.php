@@ -16,26 +16,29 @@ Route::get('/', function () {
 });
 Route::get('staff/login', 'StaffAuth\LoginController@showLoginForm')->name('loginStaff');
 Route::post('staff/login', 'StaffAuth\LoginController@login');
+
 Route::group(['prefix' => 'staff','middleware' => ['staff']], function () {
     Route::post('/logout', 'StaffAuth\LoginController@logout')->name('logoutStaff');
 
     Route::get('/register', 'StaffAuth\RegisterController@showRegistrationForm')->name('registerStaff');
     Route::post('/register', 'StaffAuth\RegisterController@register');
 
+
     Route::post('/password/email', 'StaffAuth\ForgotPasswordController@sendResetLinkEmail')->name('password.request');
     Route::post('/password/reset', 'StaffAuth\ResetPasswordController@reset')->name('password.email');
     Route::get('/password/reset', 'StaffAuth\ForgotPasswordController@showLinkRequestForm')->name('password.reset');
     Route::get('/password/reset/{token}', 'StaffAuth\ResetPasswordController@showResetForm');
-
+    Route::resource('/staff','Backend\StaffController');
     Route::resource('class','Backend\ClassController');
 
     Route::resource('section','Backend\SectionController');
 
     Route::resource('guardian','Backend\GuardianController');
 
+    Route::get('student/ajax/{id}', 'Backend\StudentController@ajax')->name('student.ajax');
     Route::resource('student','Backend\StudentController');
 
-    Route::resource('staff','Backend\StaffController');
+
 
     Route::resource('subject','Backend\SubjectController');
 
