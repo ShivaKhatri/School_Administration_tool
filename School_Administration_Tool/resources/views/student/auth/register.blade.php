@@ -81,11 +81,10 @@
                 </div>
                 <div class="col-md-4 col-sm-4 col-xs-12  form-group{{ $errors->has('middleName') ? ' has-error' : '' }}">
                     <label class="control-label"> Middle Name
-                        <span class="required">*</span>
                     </label>
                     <div class="input-group col-md-11 col-sm-11 col-xs-12">
-                        {{Form::text('middleName', null, array('class' => 'form-control', 'placeholder'=>"Enter First Name",
-                        'required' => '','maxlength'=>10))}}
+                        {{Form::text('middleName', null, array('class' => 'form-control', 'placeholder'=>"Enter Middle Name",
+                        'maxlength'=>10))}}
                         @if ($errors->has('middleName'))
                             <span class="help-block">
                             <strong>{{ $errors->first('middleName') }}</strong>
@@ -125,8 +124,11 @@
                         <span class="required">*</span></label>
                     <div class="input-group col-md-11 col-sm-11 col-xs-12">
                         <div class='input-group ' >
+                            @php
+
+                                    @endphp
                             {!! Form::date('dob', null, array('class' => 'form-control', "placeholder" => 'Enter Date of Birth',
-                                                             'required' => '', 'id'=>'dob')) !!}
+                                                             'required' => '', 'id'=>'dob','min'=>"1940-01-01", "max"=>"2017-12-31")) !!}
                             <span class="input-group-addon">
                             <span class="glyphicon glyphicon-calendar"></span>
                          </span>
@@ -153,11 +155,10 @@
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-4 col-xs-12 form-group {{ $errors->has('mobile_no') ? ' has-error' : '' }}">
-                    <label class="control-label"> Mobile No.
-                        <span class="required">*</span></label>
+                    <label class="control-label"> Mobile No.</label>
                     <div class="input-group col-md-11 col-sm-11 col-xs-12">
-                        {{Form::number('mobile_no', null, array('class' => 'form-control',
-                        'placeholder'=>"Enter Mobile Number ( For SMS Service)", 'required' => ''))}}
+                        {{Form::text('mobile_no', null, array('class' => 'form-control',
+                        'placeholder'=>"Enter Mobile Number ( For SMS Service)",'id'=>'Mob_number','maxlength'=>10))}}
                         @if ($errors->has('mobile_no'))
                             <span class="help-block">
                                     <strong>{{ $errors->first('mobile_no') }}</strong>
@@ -170,7 +171,7 @@
                         No.
                     </label>
                     <div class="input-group col-md-11 col-sm-11 col-xs-12">
-                        {{Form::number('phone_no', null, array('class' => 'form-control', 'placeholder'=>"Enter Phone Number"))}}
+                        {{Form::text('phone_no', null, array('class' => 'form-control', 'placeholder'=>"Enter Phone Number",'id'=>'Ph_number','maxlength'=>10))}}
                         @if ($errors->has('phone_no'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('phone_no') }}</strong>
@@ -234,23 +235,44 @@
                         @endif
                     </div>
                 </div>
+            <div class="form-group col-md-4 col-sm-4 col-xs-4">
+                <label class="control-label" >Session Year<span class="required">*</span>
+                </label>
+                <div class="input-group col-md-11 col-sm-11 col-xs-12">
+
+                {{ Form::selectYear('session_year',date('Y')-3, date('Y')+1,date('Y'),['class'=>'form-control year','required'=>'']) }}
+
+                    {{--                    {{ Form::date('to', \Carbon\Carbon::createFromFormat('d-m-Y', $to->to)->format('Y') )}}--}}
+                </div>
+            </div>
                 <div class="x_title col-md-12 col-sm-12 col-xs-12">
+                    <h2> Information About Parents And Guardian </h2>
+                    <div class="clearfix"></div>
+                </div>
+            <div class="row col-md-12 col-sm-12 col-xs-12">
+                <div class="col-md-12 col-sm-12 col-xs-12 form-group">
+                    <label class="control-label"> Is The Information About Parents And Guardian Already In The System? </label>
+                        <div class="input-group col-md-3 col-sm-3 col-xs-5">
+
+                            {!! Form::select('exist', ['yes'=>'Yes','no'=>'No'], 'no', ["class" => "form-control" ,'required' => '']) !!}
+                        </div>
+                </div>
+            </div>
+                <div class="x_title col-md-12 col-sm-12 col-xs-12" id="no1">
                     <h2> Choose whose information is to be collected </h2>
                     <div class="clearfix"></div>
                 </div>
-                <div class="row col-md-12 col-sm-12 col-xs-12">
+                <div class="row col-md-12 col-sm-12 col-xs-12" id="no2">
                     <div class="col-md-4 col-sm-4 col-xs-12 form-group">
                         <label class="control-label"> Mother</label>
                         <div class="input-group col-md-11 col-sm-11 col-xs-12">
                                                         {{Form::checkbox('guardian[]', "Mother",null,array( 'id'=>'mom'))}}&ensp;&ensp;
-                            {{--<input type="checkbox" value="mother" class="green-checkbox" id="mom" />--}}
                         </div>
                     </div>
                     <div class="col-md-4 col-sm-4 col-xs-12 form-group">
                         <label class="control-label"> Father</label>
                         <div class="input-group col-md-11 col-sm-11 col-xs-12">
                                                         {{Form::checkbox('guardian[]', "Father",null,array('id'=>'dad'))}}&ensp;&ensp;
-                            {{--<input type="checkbox" class="green-checkbox" value="mother" id="dad" />--}}
 
                         </div>
                     </div>
@@ -258,12 +280,24 @@
                         <label class="control-label"> Guardian</label>
                         <div class="input-group col-md-11 col-sm-11 col-xs-12">
                                                         {{Form::checkbox('guardian[]', "Guardian",null,array('id'=>'guard'))}}&ensp;&ensp;
-                            {{--<input type="checkbox" class="green-checkbox" value="mother" id="guard" />--}}
 
                         </div>
                     </div>
                 </div>
-                <div id="mother">
+            <div id="true1">
+
+            </div>
+            <span class="help-block" id="valid1"> </span>
+            <div id="true2">
+
+            </div>
+            <span class="help-block" id="valid2"> </span>
+
+            <div id="true3">
+
+            </div>
+
+            <div id="mother">
                     <div class="x_title col-md-12 col-sm-12 col-xs-12">
                         <h2> Mothers Information </h2>
                         <div class="clearfix"></div>
@@ -315,7 +349,7 @@
                             No.
                         </label>
                         <div class="input-group col-md-11 col-sm-11 col-xs-12">
-                            {{Form::number('ma_mobile_no', null, array('class' => 'form-control', 'placeholder'=>"Enter Mobile Number"))}}
+                            {{Form::text('ma_mobile_no', null, array('class' => 'form-control', 'placeholder'=>"Enter Mobile Number",'id'=>'Mo_number','maxlength'=>10,'required'=>''))}}
                             @if ($errors->has('ma_mobile_no'))
                                 <span class="help-block">
                                 <strong>{{ $errors->first('ma_mobile_no') }}</strong>
@@ -328,7 +362,7 @@
                             No.
                         </label>
                         <div class="input-group col-md-11 col-sm-11 col-xs-12">
-                            {{Form::number('ma_phone_no', null, array('class' => 'form-control', 'placeholder'=>"Enter Phone Number"))}}
+                            {{Form::text('ma_phone_no', null, array('class' => 'form-control', 'placeholder'=>"Enter Phone Number",'id'=>'Ma_number','maxlength'=>10))}}
                             @if ($errors->has('ma_phone_no'))
                                 <span class="help-block">
                                 <strong>{{ $errors->first('ma_phone_no') }}</strong>
@@ -472,7 +506,7 @@
                             No.
                         </label>
                         <div class="input-group col-md-11 col-sm-11 col-xs-12">
-                            {{Form::number('fa_mobile_no', null, array('class' => 'form-control required', 'placeholder'=>"Enter Phone Number"))}}
+                            {{Form::text('fa_mobile_no', null, array('class' => 'form-control required', 'placeholder'=>"Enter Phone Number",'id'=>'Da_number','maxlength'=>10))}}
                             @if ($errors->has('fa_mobile_no'))
                                 <span class="help-block">
                                 <strong>{{ $errors->first('fa_mobile_no') }}</strong>
@@ -485,7 +519,7 @@
                             No.
                         </label>
                         <div class="input-group col-md-11 col-sm-11 col-xs-12">
-                            {{Form::number('fa_phone_no', null, array('class' => 'form-control required', 'placeholder'=>"Enter Phone Number"))}}
+                            {{Form::text('fa_phone_no', null, array('class' => 'form-control required', 'placeholder'=>"Enter Phone Number",'id'=>'Fa_number','maxlength'=>10))}}
                             @if ($errors->has('fa_phone_no'))
                                 <span class="help-block">
                                 <strong>{{ $errors->first('fa_phone_no') }}</strong>
@@ -630,7 +664,7 @@
                             No.
                         </label>
                         <div class="input-group col-md-11 col-sm-11 col-xs-12">
-                            {{Form::number('ga_phone_no', null, array('class' => 'form-control', 'placeholder'=>"Enter Phone Number"))}}
+                            {{Form::text('ga_phone_no', null, array('class' => 'form-control', 'placeholder'=>"Enter Phone Number",'id'=>'Go_number','maxlength'=>10))}}
                             @if ($errors->has('ga_phone_no'))
                                 <span class="help-block">
                                 <strong>{{ $errors->first('ga_phone_no') }}</strong>
@@ -643,7 +677,7 @@
                             No.
                         </label>
                         <div class="input-group col-md-11 col-sm-11 col-xs-12">
-                            {{Form::number('ga_mobile_no', null, array('class' => 'form-control', 'placeholder'=>"Enter Mobile Number"))}}
+                            {{Form::text('ga_mobile_no', null, array('class' => 'form-control', 'placeholder'=>"Enter Mobile Number",'id'=>'Ga_number','maxlength'=>10))}}
                             @if ($errors->has('ga_mobile_no'))
                                 <span class="help-block">
                                 <strong>{{ $errors->first('ga_mobile_no') }}</strong>
@@ -682,7 +716,7 @@
                             <span class="required">*</span></label>
                         <div class="input-group col-md-11 col-sm-11 col-xs-12">
 
-                            {!! Form::text('occupation', null, array('class' => 'required form-control ', 'required' => '','maxlength'=>10,
+                            {!! Form::text('ga_occupation', null, array('class' => 'required form-control ', 'required' => '','maxlength'=>10,
                         'placeholder'=> 'Enter Guardians Occupation'))!!}
 
                             @if ($errors->has('occupation'))
@@ -803,37 +837,78 @@
             $("#mother").hide();
             $("#father").hide();
             $("#guardian").hide();
+            $("#mother :input").prop('required',null).attr('disabled',true);//to remove required property of hidden divs
+            $("#father :input").prop('required',null).attr('disabled',true);//to remove required property of hidden divs
+            $("#guardian :input").prop('required',null).attr('disabled',true);//to remove required property of hidden divs
+
             $("#mom").click(function () {
-                if ($(this).is(":checked")) {
+                if ($(this).is(":checked") && $('select[name="exist"]').val()=="no") {
                     $("#mother").show();
                     $("#mother :input").prop('required',true).attr('disabled',false);//to add required property of shown divs
+                    $('#yes1').detach();
 
-                } else {
+                } else if($(this).is(":checked") && $('select[name="exist"]').val()=="yes") {
                     $("#mother").hide();
                     $("#mother :input").prop('required',null).attr('disabled',true);//to remove required property of hidden divs
+                    $('#true1').html(  ' <div class="col-md-6 col-sm-6 col-xs-12 form-group" id="yes1">' +
+                        '<label class="control-label"> Enter Mothers Id</label>'+
+                        '<div class="input-group col-md-11 col-sm-11 col-xs-12">'+
+                        '<input type="number" name="yesMother" class="col-md-3 col-sm-3 col-xs-6" required/><span class="col-md-1 col-sm-1 col-xs-1"></span>'+
+                        '<button type="button" id="yesMom" class=" btn-sm btn-primary  col-md-2 col-sm-4 col-xs-6">Validate</button>'+
+                        '</div><div class="help-box" id="valid1"> </div>'+
+                        '</div>');
+                }
+                else{
+                    $("#mother").hide();
+                    $("#mother :input").prop('required',null).attr('disabled',true);//to remove required property of hidden divs
+                    $('#yes1').detach();
 
                 }
             });
             $("#dad").click(function () {
-                if ($(this).is(":checked")) {
+                if ($(this).is(":checked") && $('select[name="exist"]').val()=="no") {
                     $("#father").show();
-                    $("#father :input").prop('required',true).attr('disabled',false);//to remove required property of hidden divs
+                    $("#father :input").prop('required',true).attr('disabled',false);//to add required property of shown divs
+                    $('#yes2').detach();
 
-                } else {
+                } else if($(this).is(":checked") && $('select[name="exist"]').val()=="yes") {
                     $("#father").hide();
-                    $("#father :input").prop('required',null).attr('disabled',true);//to add required property of shown divs
+                    $("#father :input").prop('required',null).attr('disabled',true);//to remove required property of hidden divs
+                    $('#true2').html(  ' <div class="col-md-6 col-sm-6 col-xs-12 form-group" id="yes2">' +
+                        '<label class="control-label"> Enter Fathers Id</label>'+
+                        '<div class="input-group col-md-11 col-sm-11 col-xs-12">'+
+                        '<input type="number" name="yesFather" class="col-md-3 col-sm-3 col-xs-6" required/><span class="col-md-1 col-sm-1 col-xs-1"></span>'+
+                        '<button type="button" id="yesDad" class=" btn-sm btn-primary  col-md-2 col-sm-4 col-xs-5">Validate</button>'+
+                        '</div><div class="help-box" id="valid2"> </div>'+
+                        '</div>');
+                }
+                else{
+                    $("#father").hide();
+                    $("#father :input").prop('required',null).attr('disabled',true);//to remove required property of hidden divs
+                    $('#yes2').detach();
 
                 }
             });
             $("#guard").click(function () {
-                if ($(this).is(":checked")) {
-
+                if ($(this).is(":checked") && $('select[name="exist"]').val()=="no") {
                     $("#guardian").show();
-                    $("#guardian :input").prop('required',true).attr('disabled',false);//to remove required property of hidden divs
-
-                } else {
+                    $("#guardian :input").prop('required',true).attr('disabled',false);//to add required property of shown divs
+                    $('#yes3').detach();
+                } else if($(this).is(":checked") && $('select[name="exist"]').val()=="yes") {
                     $("#guardian").hide();
-                    $("#guardian :input").prop('required',null).attr('disabled',true);//to add required property of shown divs
+                    $("#guardian :input").prop('required',null).attr('disabled',true);//to remove required property of hidden divs
+                    $('#true3').html(  ' <div class="col-md-6 col-sm-6 col-xs-12 form-group" id="yes3">' +
+                        '<label class="control-label"> Enter Guardian Id</label>'+
+                        '<div class="input-group col-md-11 col-sm-11 col-xs-12">'+
+                        '<input type="number" name="yesGuardian" class="col-md-3 col-sm-4 col-xs-6" required/><span class="col-md-1 col-sm-1 col-xs-1"></span>'+
+                        '<button type="button" id="yesGuard" class=" btn-sm btn-primary  col-md-2 col-sm-4 col-xs-6">Validate</button>'+
+                        '</div><div class="help-box" id="valid3"> </div>'+
+                        '</div>');
+                }
+                else{
+                    $("#guardian").hide();
+                    $("#guardian :input").prop('required',null).attr('disabled',true);//to remove required property of hidden divs
+                    $('#yes3').detach();
 
                 }
             });
@@ -853,6 +928,39 @@
                 }
             });
         });
+    </script>
+    <script>
+        // Restricts input for each element in the set of matched elements to the given inputFilter.
+        (function($) {
+            $.fn.inputFilter = function(inputFilter) {
+                return this.on("input keydown keyup mousedown mouseup select contextmenu drop", function() {
+                    if (inputFilter(this.value)) {
+                        this.oldValue = this.value;
+                        this.oldSelectionStart = this.selectionStart;
+                        this.oldSelectionEnd = this.selectionEnd;
+                    } else if (this.hasOwnProperty("oldValue")) {
+                        this.value = this.oldValue;
+                        this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
+                    }
+                });
+            };
+        }(jQuery));
+        $("#Ph_number").inputFilter(function(value) {
+            return /^\d*$/.test(value); });
+        $("#Mob_number").inputFilter(function(value) {
+            return /^\d*$/.test(value); });
+        $("#Fa_number").inputFilter(function(value) {
+            return /^\d*$/.test(value); });
+        $("#Da_number").inputFilter(function(value) {
+            return /^\d*$/.test(value); });
+        $("#Ma_number").inputFilter(function(value) {
+            return /^\d*$/.test(value); });
+        $("#Mo_number").inputFilter(function(value) {
+            return /^\d*$/.test(value); });
+        $("#Ga_number").inputFilter(function(value) {
+            return /^\d*$/.test(value); });
+        $("#Go_number").inputFilter(function(value) {
+            return /^\d*$/.test(value); });
     </script>
     <script type="text/javascript">
         $(document).ready(function() {
@@ -881,7 +989,94 @@
             });
         });
     </script>
-    <script>
-        // $("#hiddenDiv :input").prop('required',null);
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(document).on("click", "#yesGuard", function(){
+            // $('#yesGuard').click(function() {
+                var classId = $('input[name="yesGuardian"]').val();
+                var relation = 'guardian';
+
+                console.log(classId);
+                if(classId) {
+                    $.ajax({
+                        url: 'validate/'+classId+'/'+relation,
+                        type: "GET",
+                        dataType: "json",
+                        success:function(data) {
+                            console.log(data);
+                            if(data){
+                                $('#valid3').html('<span class="label label-success">Valid</span>')
+
+                            }
+                else {
+                                $('input[name="yesGuardian"]').val('');
+                                $('#valid3').html('<span class="label label-danger">Not Valid</span>')
+                            }
+                        }
+                    });
+                }
+            });
+        });
     </script>
+
+ <script type="text/javascript">
+        $(document).ready(function() {
+            $(document).on("click", "#yesDad", function(){
+            // $('#yesGuard').click(function() {
+                var classId = $('input[name="yesFather"]').val();
+                var relation = 'Father';
+
+                console.log(classId);
+                if(classId) {
+                    $.ajax({
+                        url: 'validate/'+classId+'/'+relation,
+                        type: "GET",
+                        dataType: "json",
+                        success:function(data) {
+                            console.log(data);
+                            if(data){
+                                $('#valid2').html('<span class="label label-success">Valid</span>')
+
+                            }
+                else {
+                                $('input[name="yesFather"]').val('');
+                                $('#valid2').html('<span class="label label-danger">Not Valid</span>')
+                            }
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+
+ <script type="text/javascript">
+        $(document).ready(function() {
+            $(document).on("click", "#yesMom", function(){
+            // $('#yesGuard').click(function() {
+                var classId = $('input[name="yesMother"]').val();
+                var relation = 'Mother';
+                console.log(classId);
+                if(classId) {
+                    $.ajax({
+                        url: 'validate/'+classId+'/'+relation,
+                        type: "GET",
+                        dataType: "json",
+                        success:function(data) {
+                            console.log(data);
+                            if(data){
+                                $('#valid1').html('<span class="label label-success">Valid</span>')
+
+                            }
+                else {
+                                $('input[name="yesMother"]').val('');
+                                $('#valid1').html('<span class="label label-danger">Not Valid</span>')
+                            }
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+
+
 @endsection

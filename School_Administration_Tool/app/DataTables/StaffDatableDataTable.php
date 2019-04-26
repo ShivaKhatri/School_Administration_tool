@@ -17,7 +17,11 @@ class StaffDatableDataTable extends DataTable
     public function dataTable($query)
     {
         return datatables($query)
-            ->addColumn('action', 'staffdatable.action');
+            ->addColumn('action', function ($student) {
+                return '<a href="'.route('staff.edit',$student->id).'" class="btn btn-sm btn-primary" style="margin:3px"><i
+                                                    class="glyphicon glyphicon-edit"></i> Edit</a></a>&nbsp;&nbsp;<a href="'.route('staff.destroy',$student->id).'" class="btn btn-sm btn-danger" id="delete" ><i class="glyphicon glyphicon-remove"></i> Delete</a>';
+            })
+            ->rawColumns(['action']);
     }
 
     /**
@@ -28,7 +32,7 @@ class StaffDatableDataTable extends DataTable
      */
     public function query(Staff $model)
     {
-        return $model->newQuery()->select('id',  DB::raw('CONCAT(firstName, " ", middleName," ",lastName ) AS name'), 'created_at', 'updated_at');
+        return $model->newQuery()->select('id',  DB::raw('CONCAT(firstName, " ", middleName," ",lastName ) AS name'), 'email','mobile_no','role');
     }
 
     /**
@@ -55,8 +59,7 @@ class StaffDatableDataTable extends DataTable
         return [
             'id',
             'name',
-            'created_at',
-            'updated_at'
+            'email','mobile_no','role'
         ];
     }
 

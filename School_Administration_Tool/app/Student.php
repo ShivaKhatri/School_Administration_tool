@@ -16,7 +16,8 @@ class Student extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'firstName','middleName', 'LastName','email', 'dob','gender','address','remark','phone_no','mobile_no','profilePic','password',
+
     ];
 
     /**
@@ -49,5 +50,9 @@ class Student extends Authenticatable
     public function guardian()
     {
         return $this->belongsToMany('App\Guardian', 'class_section_student', 'student_id', 'guard_id');
+    }
+    public function obtainedMark()
+    {
+        return $this->belongsToMany('App\Model\Mark', 'mark_student', 'student_id', 'mark_id');
     }
 }

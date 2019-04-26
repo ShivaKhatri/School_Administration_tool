@@ -187,6 +187,9 @@
             <li><a href="{{route('guardian.index')}}">Gaurdian</a></li>
             <li><a href="{{route('subject.index')}}">Subject</a></li>
             <li><a href="{{route('exam.index')}}">Exam</a></li>
+            <li><a href="{{route('staff.index')}}">Staff</a></li>
+            <li><a href="{{route('attendance.index')}}">Attendance</a></li>
+            <li><a href="{{route('result.showResult')}}">Result</a></li>
                 {{--<li class="treeview">--}}
                     {{--<a href="#">--}}
                         {{--<i class="fa fa-pie-chart"></i>--}}

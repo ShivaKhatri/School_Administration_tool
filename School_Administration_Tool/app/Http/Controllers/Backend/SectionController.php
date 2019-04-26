@@ -136,7 +136,9 @@ class SectionController extends Controller
 
             Section::destroy($id);
 
-        return 'success';
+        return response()->json([
+            'success' => 'Record deleted successfully!'
+        ]);
     }
 
     public function checkId($id)

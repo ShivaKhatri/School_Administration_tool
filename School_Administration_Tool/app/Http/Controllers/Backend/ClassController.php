@@ -105,6 +105,7 @@ class ClassController extends Controller
         $class->description=$request->description;
         $class->save();
         $class_section=DB::table('classroom_section');
+        if(!($request->section==null))
         foreach($request->section as $get) {
 //            dd($get);
             $class_section->insert([
@@ -113,6 +114,7 @@ class ClassController extends Controller
         }
 
         $class_subject=DB::table('classroom_subject');
+
         if(!($request->subject==null)) {
             foreach ($request->subject as $get) {
 //            dd($get);
@@ -169,6 +171,7 @@ class ClassController extends Controller
         ]);
         $class_section=DB::table('classroom_section');
         $class_section->where('class_id','=',$id)->delete();
+        if(!($request->section==null))
         foreach($request->section as $get) {
 //            dd($id);
             $class_section->insert(['class_id' => $id, 'sec_id' => $get]);
@@ -195,7 +198,9 @@ class ClassController extends Controller
     public function destroy($id)
     {
         if (!$this->checkId($id)) {
-            return redirect()->route('class.index');
+            return response()->json([
+                'success' => 'Record deleted successfully!'
+            ]);
         }
 
         $class_section=DB::table('classroom_section');
@@ -205,7 +210,9 @@ class ClassController extends Controller
         $class_subject->where('class_id','=',$id)->delete();
         ClassRoom::destroy($id);
 
-        return 'success';
+        return response()->json([
+            'success' => 'Record deleted successfully!'
+        ]);
     }
 
     public function checkId($id)

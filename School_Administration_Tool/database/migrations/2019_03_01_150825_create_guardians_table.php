@@ -19,7 +19,7 @@ class CreateGuardiansTable extends Migration
             $table->string('LastName');
             $table->string('address');
             $table->string('profilePic')->nullable();
-
+            $table->tinyInteger('status')->default(0);
             $table->string('relation');
             $table->string('occupation')->nullable();
             $table->string('mobile_no');

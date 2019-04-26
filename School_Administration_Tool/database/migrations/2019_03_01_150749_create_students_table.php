@@ -26,6 +26,7 @@ class CreateStudentsTable extends Migration
             $table->string('phone_no')->nullable();
             $table->string('email')->unique();
             $table->string('password');
+            $table->tinyInteger('status')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

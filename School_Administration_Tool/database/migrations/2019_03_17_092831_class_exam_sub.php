@@ -22,6 +22,8 @@ class ClassExamSub extends Migration
             $table->date('examDate');
             $table->time('time_from');
             $table->time('time_to');
+            $table->tinyInteger('result')->default(0);
+
         });
     }
 

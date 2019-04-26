@@ -28,15 +28,40 @@ Route::group(['prefix' => 'staff','middleware' => ['staff']], function () {
     Route::post('/password/reset', 'StaffAuth\ResetPasswordController@reset')->name('password.email');
     Route::get('/password/reset', 'StaffAuth\ForgotPasswordController@showLinkRequestForm')->name('password.reset');
     Route::get('/password/reset/{token}', 'StaffAuth\ResetPasswordController@showResetForm');
-    Route::resource('/staff','Backend\StaffController');
+
+    Route::get('staff/role/{id}', 'Backend\StaffController@role')->name('staff.role');
+    Route::get('staff/{use}/role/{id}', 'Backend\StaffController@roleEdit')->name('staff.roleEdit');
+
+    Route::get('staff/ajax/{id}', 'Backend\StaffController@ajax')->name('staff.ajax');
+    Route::get('staff/{use}/ajax/{id}', 'Backend\StaffController@ajaxEdit')->name('staff.ajaxEdit');
+    Route::resource('staff','Backend\StaffController');
+
     Route::resource('class','Backend\ClassController');
 
     Route::resource('section','Backend\SectionController');
 
+    Route::get('attendance/subject/{id}', 'Backend\AttendanceController@subject')->name('attendance.subject');
+    Route::get('attendance/{use}/subject/{id}', 'Backend\AttendanceController@subjectEdit')->name('attendance.subject.edit');
+    Route::resource('attendance','Backend\AttendanceController');
+
+    Route::get('mark/giveMark/{id}', 'Backend\MarkController@giveMark')->name('mark.giveMark');
+    Route::get('mark/{use}/giveMark/{id}', 'Backend\MarkController@editGiveMark')->name('mark.editGiveMark');
+    Route::resource('mark','Backend\MarkController');
+
     Route::resource('guardian','Backend\GuardianController');
 
     Route::get('student/ajax/{id}', 'Backend\StudentController@ajax')->name('student.ajax');
+    Route::get('student/{use}/ajaxEdit/{id}', 'Backend\StudentController@ajaxEdit')->name('student.ajaxEdit');
+    Route::get('student/validate/{id}/{use}', 'Backend\StudentController@valid')->name('student.valid');
     Route::resource('student','Backend\StudentController');
+
+    Route::get('result/section/{id}', 'Backend\ResultController@section')->name('result.section');
+    Route::get('result/exam/{id}/{session}', 'Backend\ResultController@exam')->name('result.exam');
+    Route::get('result/showResult', 'Backend\ResultController@showResult')->name('result.showResult');
+    Route::get('result/student/{class}/{section}/{session}', 'Backend\ResultController@student')->name('result.student');
+//    classId+'/'+secID+'/'+session+'/'+examID+'/'+studentID
+    Route::get('result/result/{class}/{section}/{session}/{examID}/{studentID}', 'Backend\ResultController@result')->name('result.result');
+    Route::resource('result','Backend\ResultController');
 
 
 

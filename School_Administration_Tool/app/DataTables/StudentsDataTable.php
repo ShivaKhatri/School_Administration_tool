@@ -19,9 +19,19 @@ class StudentsDataTable extends DataTable
         return datatables($query)
             ->addColumn('action', function ($student) {
                 return '<a href="'.route('student.edit',$student->id).'" class="btn btn-sm btn-primary" style="margin:3px"><i
-                                                    class="glyphicon glyphicon-edit"></i> Edit</a></a>&nbsp;&nbsp;<a href="#edit-'.$student->id.'" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i> Delete</a>';
+                                                    class="glyphicon glyphicon-edit"></i> Edit</a></a>&nbsp;&nbsp;<a href="'.route('student.destroy',$student->id).'" class="btn btn-sm btn-danger" id="delete" ><i class="glyphicon glyphicon-remove"></i> Delete</a>';
             })
-            ->editColumn('id', 'ID: {{$id}}');
+            ->addColumn('class', function ($student) {
+                $class=Student::find($student->id)->classRoom()->first();
+                if($class==null){
+                    $class='<b>Not Assigned To A Class</b>';
+                }else
+                $class='<b>'.$class->name.'</b>';
+                return $class;
+            })
+            ->editColumn('id', 'ID: {{$id}}')
+            ->rawColumns(['class', 'action']);
+
     }
 
     /**
@@ -32,7 +42,7 @@ class StudentsDataTable extends DataTable
      */
     public function query(Student $model)
     {
-        return $model->newQuery()->select('id', DB::raw('CONCAT(firstName, " ", middleName," ",lastName ) AS name') , 'created_at', 'updated_at');
+        return $model->newQuery()->select('id', DB::raw('CONCAT(firstName, " ", middleName," ",lastName ) AS name'),'address','email','phone_no');
     }
 
     /**
@@ -45,7 +55,7 @@ class StudentsDataTable extends DataTable
         return $this->builder()
                     ->columns($this->getColumns())
                     ->minifiedAjax()
-                    ->addAction(['width' => '80px'])
+                    ->addAction(['width' => '180px'])
                     ->parameters($this->getBuilderParameters());
     }
 
@@ -58,9 +68,8 @@ class StudentsDataTable extends DataTable
     {
         return [
             'id',
-            'name',
-            'created_at',
-            'updated_at'
+            'name','address','email','phone_no','class'
+
         ];
     }
 

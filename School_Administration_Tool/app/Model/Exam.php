@@ -19,6 +19,10 @@ class Exam extends Model
     {
         return $this->belongsToMany('App\Model\Subject', 'class_exam_sub', 'exam_id', 'sub_id');
     }
+    public function attendance()
+    {
+        return $this->hasMany('App\Model\Attendance', 'exam_id');
+    }
 
     public function classRoom()
     {

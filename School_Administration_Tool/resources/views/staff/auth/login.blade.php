@@ -37,7 +37,6 @@
     <!-- /.login-logo -->
     <div class="login-box-body form-group{{ $errors->has('email') ? ' has-error' : '' }}">
         <p class="login-box-msg">Sign in to start your session</p>
-        <a href="{{route('registerStaff')}}"> registe</a>
 
         <form  role="form" method="POST" action="{{ url('/staff/login') }}">
             {{ csrf_field() }}

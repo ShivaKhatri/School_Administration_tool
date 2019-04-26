@@ -106,6 +106,8 @@
 </div>
 </body>
 {{--scripts of bootstraps--}}
+<script src="{!! asset('bower_components/jquery/dist/jquery.min.js')!!}"></script>
+
 <script src="{!! asset('js/bootstrap.bundle.js') !!}"></script>
 <script src="{!! asset('js/bootstrap.js') !!}"></script>
 </html>

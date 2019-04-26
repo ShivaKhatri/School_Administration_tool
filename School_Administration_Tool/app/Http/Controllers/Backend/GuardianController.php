@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\DataTables\GuardiansDataTable;
+use Illuminate\Support\Facades\DB;
 
 class GuardianController extends Controller
 {
@@ -20,6 +21,8 @@ class GuardianController extends Controller
         if (Auth::guard('staff')->check()) {
             return $datable->render('backend.guardian.indexGuardian');
         }
+        else
+            return redirect('/');
     }
 
     /**
@@ -29,7 +32,8 @@ class GuardianController extends Controller
      */
     public function create()
     {
-        return view('guardian.auth.register');
+        return redirect('staff/guardian');
+
     }
 
     /**
@@ -40,11 +44,6 @@ class GuardianController extends Controller
      */
     public function store(Request $request)
     {
-        $guardian=new Guardian();
-        $guardian->name=$request->name;
-        $guardian->email=$request->email;
-        $guardian->password=$request->password;
-        $guardian->save();
         return redirect('staff/guardian');
     }
 
@@ -67,7 +66,9 @@ class GuardianController extends Controller
      */
     public function edit($id)
     {
-      dd('editr');
+        $guardian=Guardian::find($id);
+        return view('backend.guardian.editGaurdian')->with('guardian',$guardian);
+
     }
 
     /**
@@ -79,7 +80,35 @@ class GuardianController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $guardian=Guardian::find($id);
+        if (!file_exists(public_path() . '/images/guardianProfilePic/')) {
+            mkdir(public_path() . '/images/guardianProfilePic/');
+        }
+        $profilePic='';
+        if ($request->ga_profilePic) {
+            $file = $request->file('ga_profilePic');
+            $file_name = rand(1857, 9899) . '_' . $file->getClientOriginalName();
+            $file->move(public_path() . '/images/guardianProfilePic/', $file_name);
+//            dd($file_name);
+            $profilePic = $file_name;
+        }
+        $guardian->update([
+
+            'firstName'=>$request->ga_Fname,
+            'middleName'=>$request->ga_Mname,
+            'LastName'=>$request->ga_Lname,
+            'email'=>$request->ga_email,
+            'relation'=>$request->relation,
+            'address'=>$request->ga_address,
+            'remark'=>$request->ga_remarks,
+            'phone_no'=>$request->ga_phone_no,
+            'mobile_no'=>$request->ga_mobile_no,
+            'profilePic'=>$profilePic,
+            'password'=>bcrypt($request->ga_password)
+
+        ]);
+
+        return redirect('staff/guardian');
     }
 
     /**
@@ -90,6 +119,30 @@ class GuardianController extends Controller
      */
     public function destroy($id)
     {
-        //
+//        dd('here');
+        if (!$this->checkId($id)) {
+            return response()->json([
+                'success' => 'Record not deleted !'
+            ]);
+
+        }
+
+        $guardian_student=DB::table('guardian_student');
+        $guardian_student->where('guard_id','=',$id)->delete();
+
+        Guardian::destroy($id);
+
+        return response()->json([
+            'success' => 'Record deleted successfully!'
+        ]);
+    }
+
+    public function checkId($id)
+    {
+        $query = Guardian::all();
+        $query->where('id', '=', $id);
+        $this->model = $query->first();
+
+        return $this->model;
     }
 }

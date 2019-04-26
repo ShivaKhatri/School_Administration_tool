@@ -39,14 +39,25 @@
             </div>
             <div class="col-md-12 col-sm-12 col-xs-12 row" style="display: flex; flex-wrap: wrap; align-content: stretch;">
                 <span class="col-md-2 col-sm-2 col-xs-2"></span>
-                <div class="form-group col-md-4 col-sm-4 col-xs-4">
+                <div class="form-group{{ $errors->has('from') ? ' has-error' : '' }} col-md-4 col-sm-4 col-xs-4">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12" >Start date
                     </label>
                     <div class="col-md-6 col-sm-6 col-xs-12">
                         {{ Form::date('from',null,['class'=>'date'])}}
                     </div>
+                    @if ($errors->has('from'))
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <span class="col-md-2 col-sm-2 col-xs-2"></span>
+                            <div class="alert alert-danger alert-dismissible col-md-8 col-sm-8 col-xs-8">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                <h4><i class="icon fa fa-ban"></i> Alert!</h4>
+                                The Start Date is required for the exam
+                            </div>
+                            <span class="col-md-2 col-sm-2 col-xs-2"></span>
+                        </div>
+                    @endif
                 </div>
-                <div class="form-group col-md-4 col-sm-4 col-xs-4">
+                <div class="form-group{{ $errors->has('to') ? ' has-error' : '' }} col-md-4 col-sm-4 col-xs-4">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12" >End date
                     </label>
                     <div class="col-md-6 col-sm-6 col-xs-12">
@@ -54,6 +65,17 @@
 
                         {{--                    {{ Form::date('to', \Carbon\Carbon::createFromFormat('d-m-Y', $to->to)->format('Y') )}}--}}
                     </div>
+                    @if ($errors->has('to'))
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <span class="col-md-2 col-sm-2 col-xs-2"></span>
+                            <div class="alert alert-danger alert-dismissible col-md-8 col-sm-8 col-xs-8">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                <h4><i class="icon fa fa-ban"></i> Alert!</h4>
+                                The End Date must me after the Start Date of exam
+                            </div>
+                            <span class="col-md-2 col-sm-2 col-xs-2"></span>
+                        </div>
+                    @endif
                 </div>
                 <span class="col-md-2 col-sm-2 col-xs-2"></span>
 

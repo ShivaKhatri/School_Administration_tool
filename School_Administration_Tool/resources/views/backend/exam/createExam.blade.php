@@ -32,62 +32,73 @@
                 {{--</span>--}}
             @endif
             <div class="col-md-12 col-sm-12 col-xs-12 row" style="display: flex; flex-wrap: wrap; align-content: stretch;">
-                <span class="col-md-2 col-sm-2 col-xs-2"></span>
-                <div class="form-group col-md-4 col-sm-4 col-xs-4">
+                <div class=" col-md-6 col-sm-4 col-xs-4 form-group{{ $errors->has('from') ? ' has-error' : '' }}">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12" >Start date<span class="required">*</span>
                     </label>
                     <div class="col-md-6 col-sm-6 col-xs-12">
-                        {{ Form::date('from',null,['class'=>'date','required'=>''])}}
+                        {{ Form::date('from',null,['class'=>'date form-control col-md-12 col-sm-12 col-xs-12','required'=>''])}}
                     </div>
+                    @if ($errors->has('from'))
+                        <span class="help-block"> <strong>{{ $errors->first('from') }}</strong>
+                        </span>
+                    @endif
                 </div>
-                <div class="form-group col-md-4 col-sm-4 col-xs-4">
+                <div class="col-md-6 col-sm-4 col-xs-4 form-group{{ $errors->has('to') ? ' has-error' : '' }}">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12" >End date<span class="required">*</span>
                     </label>
                     <div class="col-md-6 col-sm-6 col-xs-12">
-                        {{ Form::date('to',null,['class'=>'date','required'=>''])}}
+                        {{ Form::date('to',null,['class'=>'date form-control col-md-12 col-sm-12 col-xs-12','required'=>''])}}
 
                         {{--                    {{ Form::date('to', \Carbon\Carbon::createFromFormat('d-m-Y', $to->to)->format('Y') )}}--}}
+                        @if ($errors->has('to'))
+                            <span class="help-block"> <strong>The end date of this exam should after the start date</strong>
+                        </span>
+                        @endif
                     </div>
+
                 </div>
-                <span class="col-md-2 col-sm-2 col-xs-2"></span>
 
             </div>
             <div class="col-md-12 col-sm-12 col-xs-12 row" style="display: flex; flex-wrap: wrap; align-content: stretch;">
-                <span class="col-md-2 col-sm-2 col-xs-2"></span>
-                <div class="form-group col-md-4 col-sm-4 col-xs-4">
+                <div class=" col-md-6 col-sm-6 col-xs-6 form-group{{ $errors->has('resultDay') ? ' has-error' : '' }}">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12" >Result date<span class="required">*</span>
                     </label>
                     <div class="col-md-6 col-sm-6 col-xs-12">
-                        {{ Form::date('resultDay',null,['class'=>'date','required'=>''])}}
+                        {{ Form::date('resultDay',null,['class'=>'date form-control col-md-12 col-sm-12 col-xs-12','required'=>''])}}
                     </div>
+                    @if ($errors->has('resultDay'))
+                        <span class="help-block"> <strong>The date of result must be after the date the exam ends  </strong>
+                        </span>
+                    @endif
                 </div>
-                <div class="form-group col-md-4 col-sm-4 col-xs-4">
+                <div class=" col-md-6 col-sm-6 col-xs-6 form-group{{ $errors->has('session_year') ? ' has-error' : '' }}">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12" >Session Year<span class="required">*</span>
                     </label>
                     <div class="col-md-6 col-sm-6 col-xs-12">
-                        {{ Form::selectYear('session_year',date('Y')-20, date('Y')+1,date('Y'),['class'=>'year','required'=>'']) }}
+                        {{ Form::selectYear('session_year',date('Y')-20, date('Y')+1,date('Y'),['class'=>'year form-control ','required'=>'']) }}
 
                         {{--                    {{ Form::date('to', \Carbon\Carbon::createFromFormat('d-m-Y', $to->to)->format('Y') )}}--}}
                     </div>
+                    @if ($errors->has('classRoom'))
+                        <span class="help-block"> <strong>{{ $errors->first('session_year') }}</strong>
+                        </span>
+                    @endif
                 </div>
-                <span class="col-md-2 col-sm-2 col-xs-2"></span>
 
             </div>
-            <div class="form-group col-md-12 col-sm-12 col-xs-12 row" style="display: flex; flex-wrap: wrap; align-content: stretch;">
-                {{--@php--}}
-                {{--$i=1;--}}
-                {{--$diff=0;--}}
-                {{--@endphp--}}
                 @foreach($class as $data)
                     <span class="col-md-2 col-sm-2 col-xs-2"></span>
                     <div class="col-md-8 col-sm-8 col-xs-8 row" style="margin:3px; border-style: groove; border-color:#3c8dbc; ">
                         <span class="col-md-4 col-sm-4 col-xs-4"></span>
 
-                        <div class="col-md-4 col-sm-4 col-xs-4 {{isset($message) ? ' has-error' : ''}}">
+                        <div class="col-md-4 col-sm-4 col-xs-4 {{ $errors->has('classRoom') ? ' has-error' : '' }}">
                             <label >Class {{$data->name}}
                             </label>
                             {{Form::checkbox('classRoom[]', $data->id,null,array('class'=>'green-checkbox'))}}&ensp;&ensp;
-
+                            @if ($errors->has('classRoom'))
+                                <span class="help-block"> <strong>{{ $errors->first('classRoom') }}</strong>
+                        </span>
+                            @endif
                         </div>
                         <span class="col-md-4 col-sm-4 col-xs-4"></span>
                         {{--                       {{dd(isset($message))}}--}}
@@ -192,10 +203,11 @@
                 </div>
                 {{--<span class="col-md-3"></span>--}}
             </div>
-        </div>
         <div class="box-footer">
             <button type="submit" form="examForm" id="submit" class="btn btn-primary">Submit</button>
         </div>
+        </div>
+
     </div>
     {!! Form::close() !!}
 @endsection

@@ -21,7 +21,7 @@ class CreateExamsTable extends Migration
             $table->integer('session_year');
             $table->date('from');
             $table->date('to');
-            $table->tinyInteger('status');
+            $table->tinyInteger('status')->default(0);
             $table->timestamps();
         });
     }

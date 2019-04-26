@@ -15,7 +15,7 @@
                 <!-- /.box-header -->
                 <div class="box-body">
                     {{--{!! $dataTable->table() !!}--}}
-                    {!! $dataTable->table() !!}
+                    {!! $dataTable->table(['class' => 'table table-striped ']) !!}
                 </div>
                 <!-- /.box-body -->
             </div>
@@ -28,7 +28,7 @@
     <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <!-- from dataTables push-->
     <script src="https://cdn.datatables.net/buttons/1.4.2/js/dataTables.buttons.min.js"></script>
-    <script src="{!! asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')!!}"></script>
+{{--    <script src="{!! asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')!!}"></script>--}}
     <script src="{{asset('vendor/datatables/buttons.server-side.js')}}"></script>
     {!! $dataTable->scripts() !!}
     <script>

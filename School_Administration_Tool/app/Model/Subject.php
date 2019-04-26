@@ -20,5 +20,9 @@ class Subject extends Model
     {
         return $this->belongsToMany('App\Model\Exam', 'class_exam_sub', 'sub_id', 'exam_id');
     }
+    public function staff()
+    {
+        return $this->belongsToMany('App\Staff', 'class_staff_subject', 'subject_id', 'staff_id');
+    }
 
 }

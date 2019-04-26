@@ -95,8 +95,11 @@ class ClassRoomsDataTable extends DataTable
             'id',
             'name',
             'description',
+            'section',
+            'subject',
             'created_at',
-            'updated_at'
+            'updated_at',
+
         ];
     }
 

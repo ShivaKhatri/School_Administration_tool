@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\DataTables\ExamDataTable;
 use App\Model\ClassRoom;
 use App\Model\Exam;
 use App\Model\Section;
 use App\Model\Subject;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Redirect;
 use Yajra\DataTables\DataTables;
 
 class ExamController extends Controller
@@ -21,60 +21,15 @@ class ExamController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(ExamDataTable $datable)
     {
-        return view('backend.exam.indexExam');
+        if (Auth::guard('staff')->check()) {
+            return $datable->render('backend.exam.indexExam');
+        }
+        else
+            return redirect('/');
     }
 
-
-    public function tableData()
-    {
-        $exam = Exam::all();
-
-        return DataTables::of($exam)
-            ->addColumn('class', function ($exam) {
-                $exam=Exam::find($exam->id)->classRoom()->get();
-                $count=count($exam);
-                $wow='<ol>';
-                foreach($exam as $get){
-                    $wow=$wow.'<li>'.$get->name.'</li>';
-
-                }
-                $wow=$wow.'</ol>';
-//                dd($sec);
-                if($count==0){
-                    $wow='<b>No Class Assigned</b>';
-                    return $wow;
-                }
-//                dd($wow);
-                return $wow;
-            })
-            ->addColumn('subject', function ($exam) {
-                $subject=Exam::find($exam->id)->subject()->get();
-                $count=count($subject);
-                $wow='<ol>';
-                foreach($subject as $get){
-                    $wow=$wow.'<li>'.$get->name.'</li>';
-
-                }
-                $wow=$wow.'</ol>';
-//                dd($sec);
-                if($count==0){
-                    $wow='<b>No Subject Assigned</b>';
-                    return $wow;
-                }
-//                dd($wow);
-                return $wow;
-            })
-            ->addColumn('action', function ($exam) {
-                return '<a href="'.route('exam.edit',$exam->id).'" class="btn btn-sm btn-primary" style="margin:3px"><i
-                                                    class="glyphicon glyphicon-edit"></i> Edit</a></a>&nbsp;&nbsp;<a href="'.route('exam.destroy',$exam->id).'" class="btn btn-sm btn-danger" id="delete"><i class="glyphicon glyphicon-remove"></i> Delete</a>';
-            })
-            ->editColumn('id', '{{$id}}')
-            ->rawColumns([ 'class','subject', 'action'])
-            ->make(true);
-
-    }
     /**
      * Show the form for creating a new resource.
      *
@@ -88,6 +43,8 @@ class ExamController extends Controller
             $section=Section::all();
             return view('backend.exam.createExam')->with('subject',$subject)->with('class',$class)->with('section',$section);
         }
+        else
+            return redirect('/');
     }
 
     /**
@@ -135,7 +92,7 @@ class ExamController extends Controller
                 $timeTo='time_to'.$diff;
 //                dd($request);
                 $class_exam_sub->insert([
-                    ['exam_id' => $exam->id, 'class_id' => $get,'sub_id'=>$data,'full_marks'=>$request->$fullmarks,'pass_marks'=>$request->$passmarks,'time_from'=>$request->$timeFrom,'time_to'=>$request->$timeTo,'examDate'=>$request->$examDate]
+                    ['exam_id' => $exam->id, 'class_id' => $get,'sub_id'=>$data,'full_marks'=>$request->$fullmarks,'pass_marks'=>$request->$passmarks,'time_from'=>$request->$timeFrom,'time_to'=>$request->$timeTo,'examDate'=>$request->$examDate,'session_year'=>date('Y')]
                 ]);
             }
 
@@ -162,11 +119,11 @@ class ExamController extends Controller
      */
     public function edit($id)
     {
+
         $exam=Exam::find($id);
         $subject=Subject::all();
         $classRoom=ClassRoom::all();
         return view('backend.exam.editExam')->with('classRoom',$classRoom)->with('exam',$exam)->with('subject',$subject);
-
     }
 
     /**
@@ -202,7 +159,7 @@ class ExamController extends Controller
 
         foreach($request->classRoom as $get) {
 
-            dd($request);
+//            dd($request);
             $subject='subject'.$get;
 //            dd($request->subject10);
             foreach($request->$subject as $data){
@@ -213,7 +170,7 @@ class ExamController extends Controller
                 $timeFrom='time_from'.$diff;
                 $timeTo='time_to'.$diff;
                 $class_exam_sub->insert([
-                    ['exam_id' => $exam->id, 'class_id' => $get,'sub_id'=>$data,'full_marks'=>$request->$fullmarks,'pass_marks'=>$request->$passmarks,'time_from'=>$request->$timeFrom,'time_to'=>$request->$timeTo,'examDate'=>$request->$examDate]
+                    ['exam_id' => $exam->id, 'class_id' => $get,'sub_id'=>$data,'full_marks'=>$request->$fullmarks,'pass_marks'=>$request->$passmarks,'time_from'=>$request->$timeFrom,'time_to'=>$request->$timeTo,'examDate'=>$request->$examDate,'session_year'=>date('Y')]
                 ]);
             }
 
@@ -230,12 +187,16 @@ class ExamController extends Controller
     public function destroy($id)
     {
         if (!$this->checkId($id)) {
-            return redirect()->route('exam.index');
+            return response()->json([
+                'success' => 'Record  not deleted!'
+            ]);
         }
 
         Exam::destroy($id);
 
-        return redirect()->route('exam.index');
+        return response()->json([
+            'success' => 'Record deleted successfully!'
+        ]);
     }
 
     public function checkId($id)

@@ -16,7 +16,7 @@ class Guardian extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'firstName','middleName', 'LastName','email', 'relation','occupation','address','phone_no','mobile_no','profilePic','password',
     ];
 
     /**
