@@ -59,7 +59,7 @@ Route::group(['prefix' => 'staff','middleware' => ['staff']], function () {
     Route::get('result/exam/{id}/{session}', 'Backend\ResultController@exam')->name('result.exam');
     Route::get('result/showResult', 'Backend\ResultController@showResult')->name('result.showResult');
     Route::get('result/student/{class}/{section}/{session}', 'Backend\ResultController@student')->name('result.student');
-//    classId+'/'+secID+'/'+session+'/'+examID+'/'+studentID
+
     Route::get('result/result/{class}/{section}/{session}/{examID}/{studentID}', 'Backend\ResultController@result')->name('result.result');
     Route::resource('result','Backend\ResultController');
 
@@ -67,7 +67,23 @@ Route::group(['prefix' => 'staff','middleware' => ['staff']], function () {
 
     Route::resource('subject','Backend\SubjectController');
 
+    Route::get('exam/class/{exam_id}/{class}', 'Backend\ExamController@exam')->name('exam.routine');
     Route::resource('exam','Backend\ExamController');
+
+    Route::get('fee/student/{student_id}', 'Backend\FeeController@student')->name('fee.student');
+    Route::get('fee/{use}/student/{student_id}', 'Backend\FeeController@studentEdit')->name('fee.studentEdit');
+    Route::resource('fee','Backend\FeeController');
+
+    Route::get('fine/student/{student_id}', 'Backend\FineController@student')->name('fine.student');
+    Route::get('fine/{use}/student/{student_id}', 'Backend\FineController@studentEdit')->name('fine.studentEdit');
+    Route::resource('fine','Backend\FineController');
+
+    Route::get('discount/student/{student_id}', 'Backend\DiscountController@student')->name('discount.student');
+    Route::get('discount/{use}/student/{student_id}', 'Backend\DiscountController@studentEdit')->name('discount.studentEdit');
+    Route::resource('discount','Backend\DiscountController');
+
+    Route::get('bill/student/{student_id}', 'Backend\BillController@student')->name('bill.student');
+    Route::resource('bill','Backend\BillController');
 
 
 

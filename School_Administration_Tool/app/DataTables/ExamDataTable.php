@@ -51,8 +51,9 @@ class ExamDataTable extends DataTable
                 return $wow;
             })
             ->addColumn('action', function ($exam) {
-                return '<a href="'.route('exam.edit',$exam->id).'" class="btn btn-sm btn-primary" style="margin:3px"><i
-                                                    class="glyphicon glyphicon-edit"></i> Edit</a></a>&nbsp;&nbsp;<a href="'.route('exam.destroy',$exam->id).'" class="btn btn-sm btn-danger" id="delete"><i class="glyphicon glyphicon-remove"></i> Delete</a>';
+                return '<a href="'.route('exam.show',$exam->id).'" class="btn btn-sm btn-primary" style="margin:3px"><i
+                                                    class="glyphicon glyphicon-eye-open"></i> Show</a>&nbsp;&nbsp;<a href="'.route('exam.edit',$exam->id).'" class="btn btn-sm btn-primary" style="margin:3px"><i
+                                                    class="glyphicon glyphicon-edit"></i> Edit</a>&nbsp;&nbsp;<a href="'.route('exam.destroy',$exam->id).'" class="btn btn-sm btn-danger" id="delete"><i class="glyphicon glyphicon-remove"></i> Delete</a>';
             })
             ->editColumn('status', function ($exam) {
                 $subject=Exam::find($exam->id);

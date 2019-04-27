@@ -31,6 +31,7 @@ class MarkDataTable extends DataTable
                 }
                 return $wow;
             })
+
             ->addColumn('Class', function ($mark) {
                 $class=ClassRoom::find($mark->class_id);
                 $wow='<b>'.$class->name.'</b>';

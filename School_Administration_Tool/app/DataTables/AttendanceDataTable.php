@@ -49,6 +49,14 @@ class AttendanceDataTable extends DataTable
 //                dd($wow);
                 return $wow;
             })
+            ->addColumn('AttendaceType', function ($mark) {
+                if($mark->exam_id!=null){
+                    $wow='<b> Exam</b>';}
+                else{
+                    $wow='<b>Regular</b>';
+                }
+                return $wow;
+            })
             ->addColumn('absent', function ($attendance) {
                 $count1=DB::table('attendance_students')->select('student_id')->where('attendance_id','=',$attendance->id)->where('present','=',1)->count('student_id');
 
@@ -70,7 +78,7 @@ class AttendanceDataTable extends DataTable
                                                     class="glyphicon glyphicon-edit"></i> Edit</a></a>&nbsp;&nbsp;<a href="'.route('attendance.destroy',$class->id).'" class="btn btn-sm btn-danger" id="delete"><i class="glyphicon glyphicon-remove"></i> Delete</a>';
             })
 
-            ->rawColumns(['section', 'class', 'staff','absent','present', 'action']);
+            ->rawColumns(['section', 'class', 'AttendaceType','staff','absent','present', 'action']);
     }
 
     /**
@@ -81,7 +89,7 @@ class AttendanceDataTable extends DataTable
      */
     public function query(Attendance $model)
     {
-        return $model->newQuery()->select('id','section_id','staff_id','class_id', 'date', 'session');
+        return $model->newQuery()->select('id','section_id','staff_id','class_id','exam_id', 'date', 'session');
     }
 
     /**
@@ -107,7 +115,7 @@ class AttendanceDataTable extends DataTable
     {
         return [
             'id',
-           'date','section', 'class', 'staff','absent','present',
+           'date','section', 'class', 'staff','absent','present','AttendaceType',
            'session'
         ];
     }

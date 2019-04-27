@@ -29,6 +29,18 @@ class ClassRoom extends Model
     {
         return $this->belongsToMany('App\Model\Exam', 'class_exam_sub', 'class_id', 'exam_id');
     }
+    public function fee()
+    {
+        return $this->hasMany('App\Model\Fee', 'class_id');
+    }
+    public function fine()
+    {
+        return $this->hasMany('App\Model\Fine', 'class_id');
+    }
+    public function discount()
+    {
+        return $this->hasMany('App\Model\Discount', 'class_id');
+    }
 
 
 }

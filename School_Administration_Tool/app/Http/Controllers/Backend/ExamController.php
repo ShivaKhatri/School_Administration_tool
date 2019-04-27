@@ -7,12 +7,10 @@ use App\Model\ClassRoom;
 use App\Model\Exam;
 use App\Model\Section;
 use App\Model\Subject;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Yajra\DataTables\DataTables;
 
 class ExamController extends Controller
 {
@@ -108,7 +106,96 @@ class ExamController extends Controller
      */
     public function show($id)
     {
-        //
+        $class = DB::table('class_rooms')
+            ->join('class_exam_sub', 'class_rooms.id', '=', 'class_exam_sub.class_id')
+            ->select('class_rooms.*')->pluck('class_rooms.name','class_rooms.id')
+        ;
+        return view('backend.exam.showExam')->with('class',$class)->with('exam_id',$id);
+    }
+    public function exam($exam_id,$class)
+    {
+
+
+
+        $examSub = DB::table('class_exam_sub')->select('sub_id','time_from','time_to','examDate')->where('exam_id','=',$exam_id)->where('class_id','=',$class)->get();
+        $examDetails=Exam::find($exam_id);
+        $classDetails=ClassRoom::find($class);
+        $html='
+                        <!-- Main content -->
+                        <section class="invoice" id="examRoutine" >
+                            <!-- title row -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h2 class="page-header">
+                                        <i class="fa fa-globe"></i> Class: '.$classDetails->name.'
+                                    </h2>
+                                </div>
+                                <div class="col-md-6">
+                                    <h2 class="page-header">
+                                        <i class="fa fa-globe"></i> Exam: '.$examDetails->name.'
+                                    </h2>
+                                </div>
+                                <!-- /.col -->
+                            </div>
+                            <!-- info row -->
+                            <div class="row invoice-info">
+                                <div class="col-sm-4 invoice-col">
+                                    <address>
+                                        <strong>From: '.$examDetails->from.'</strong><br>
+                                    </address>
+                                </div>
+                                <!-- /.col -->
+                                <div class="col-sm-4 invoice-col">
+                                    <address>
+                                        <strong>To: '.$examDetails->to.'</strong><br>
+                                    </address>
+                                </div>
+                                <!-- /.col -->
+                                <!-- /.col -->
+                            </div>
+                            <!-- /.row -->
+        
+                            <!-- Table row -->
+                            <div class="row">
+                                <div class="col-xs-12 table-responsive">
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>SN</th>
+                                            <th>Sub</th>
+                                            <th>Exam Date</th>
+                                            <th>Time From</th>
+                                            <th>Time To</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>';
+        $i=0;
+        foreach ($examSub as $value){
+            $i=$i+1;
+            $subjectDetail=Subject::find($value->sub_id);
+            $html= $html.'
+                                        <tr>
+                                            <td>'.$i.'</td>
+                                            <td>'.$subjectDetail->name.'</td>
+                                            <td>'.$value->examDate.'</td>
+                                            <td>'.$value->time_from.'</td>
+                                            <td>'.$value->time_to.'</td>
+                                        </tr>';
+        }
+        $html= $html.'
+                                         </tbody>
+                                    </table>
+                                </div>
+                                <!-- /.col -->
+                            </div>
+                        </section>
+                      
+                    ';
+
+
+        return json_encode($html);
+
+
     }
 
     /**
